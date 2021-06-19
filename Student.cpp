@@ -1,7 +1,14 @@
 #include "Student.hpp"
 
-Student::Student(std::string firstName, std::string sureName, std::string city, std::string street, std::string numberOfStreet, std::string pesel)
-    : firstName_(firstName), sureName_(sureName), address{city, street, numberOfStreet}, pesel_(pesel) {}
+Student::Student(std::string firstName
+    , std::string sureName
+    , std::string city
+    , std::string street
+    , std::string numberOfStreet
+    , size_t indexNumber
+    , std::string pesel)
+    : firstName_(firstName), sureName_(sureName), address{city, street, numberOfStreet}, indexNumber_(indexNumber), pesel_(pesel) 
+    {}
 
 void Student::setFirstName(const std::string& firstName) {
     firstName_ = firstName;
@@ -39,16 +46,8 @@ std::string Student::getSureName() const {
     return sureName_;
 }
 
-std::string Student::getCity() const {
-    return address.city_;
-}
-
-std::string Student::getStreet() const {
-    return address.street_;
-}
-
-std::string Student::getNumberOfStreet() const {
-    return address.numberOfStreet_;
+std::string Student::getAddress() const{
+    return address.getAddress();
 }
 
 std::string Student::getPesel() const {

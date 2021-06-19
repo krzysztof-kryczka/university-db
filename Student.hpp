@@ -16,14 +16,20 @@ struct Address {
     std::string street_ = defaultName;
     std::string numberOfStreet_ = defaultName;
 
-    std::string getAddress() {
+    std::string getAddress() const {
         return city_ + " " + street_ + " " + numberOfStreet_;
     }
 };
 
 class Student {
 public:
-    Student(std::string firstName, std::string sureName, std::string city, std::string street, std::string numberOfStreet, std::string Pesel);
+    Student(std::string firstName
+    , std::string sureName
+    , std::string city
+    , std::string street
+    , std::string numberOfStreet
+    , size_t indexNumber
+    , std::string Pesel);
 
     void setFirstName(const std::string& firstName);
     void setSureName(const std::string& sureName);
@@ -35,9 +41,7 @@ public:
 
     std::string getFirstName() const;
     std::string getSureName() const;
-    std::string getCity() const;
-    std::string getStreet() const;
-    std::string getNumberOfStreet() const;
+    std::string getAddress() const;
     std::string getPesel() const;
 
     void printbyId(const size_t& id);
@@ -52,6 +56,7 @@ private:
     std::string firstName_ = defaultName;
     std::string sureName_ = defaultName;
     Address address;
+    size_t indexNumber_ = 0;
     std::string pesel_ = defaultName;
     Gender gender_ = Gender::Undefined;
 };
