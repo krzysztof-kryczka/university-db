@@ -4,7 +4,8 @@
 #include <iostream>
 
 int main() {
-    Student student{"Jan", "Nowak", "A", "a", "1", 123, "12345678901"};
+    Student student{"Jan", "Nowak", "Poznań", "smutna", "1", 123, "12345678901", Gender::Male};
+    Student student2{"Anna", "Kowalska", "Katowice", "wesoła", "1", 4321, "98876543210", Gender::Female};
 
     std::cout << "address: " << student.getAddress() << '\n';
 

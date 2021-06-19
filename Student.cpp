@@ -6,8 +6,9 @@ Student::Student(std::string firstName
     , std::string street
     , std::string numberOfStreet
     , size_t indexNumber
-    , std::string pesel)
-    : firstName_(firstName), sureName_(sureName), address{city, street, numberOfStreet}, indexNumber_(indexNumber), pesel_(pesel) 
+    , std::string pesel
+    , Gender gender)
+    : firstName_(firstName), sureName_(sureName), address{city, street, numberOfStreet}, indexNumber_(indexNumber), pesel_(pesel), gender_(gender) 
     {}
 
 void Student::setFirstName(const std::string& firstName) {
@@ -38,6 +39,9 @@ void Student::setGender(const Gender& gender) {
     gender_ = gender;
 }
 
+void Student::setIndexNumber(const size_t& indexNumber) {
+    indexNumber_ = indexNumber;
+}
 std::string Student::getFirstName() const {
     return firstName_;
 }
@@ -54,8 +58,6 @@ std::string Student::getPesel() const {
     return pesel_;
 }
 
-void Student::printbyId(const size_t& id) {}
-void Student::printAll() {}
 void Student::searchByFirstName() {}
 void Student::searchBySecondName() {}
 void Student::searchByStreet() {}

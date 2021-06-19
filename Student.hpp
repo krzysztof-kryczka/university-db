@@ -29,23 +29,24 @@ public:
     , std::string street
     , std::string numberOfStreet
     , size_t indexNumber
-    , std::string Pesel);
+    , std::string Pesel
+    , Gender Gender);
 
     void setFirstName(const std::string& firstName);
     void setSureName(const std::string& sureName);
     void setCity(const std::string& city);
     void setStreet(const std::string& street);
     void setNumberOfStreet(const std::string& numberOfStreet);
+    void setIndexNumber(const size_t& indexNumber);
     void setPesel(const std::string& numberOfStreet);
     void setGender(const Gender& gender);
 
     std::string getFirstName() const;
     std::string getSureName() const;
     std::string getAddress() const;
+    size_t getIndexNumber() const;
     std::string getPesel() const;
-
-    void printbyId(const size_t& id);
-    void printAll();
+    Gender getGender() const;
 
     void searchByFirstName();
     void searchBySecondName();
