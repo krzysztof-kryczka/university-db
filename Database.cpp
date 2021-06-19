@@ -1,4 +1,4 @@
-#include "DataBase.hpp"
+#include "Database.hpp"
 
 void Database::addStudent(Student student) {
     students_.push_back(student);
