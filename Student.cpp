@@ -58,6 +58,14 @@ std::string Student::getPesel() const {
     return pesel_;
 }
 
+size_t Student::getIndexNumber() const {
+    return indexNumber_;
+}
+
+Gender Student::getGender() const {
+    return gender_;
+}
+
 void Student::searchByFirstName() {}
 void Student::searchBySecondName() {}
 void Student::searchByStreet() {}

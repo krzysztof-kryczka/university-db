@@ -53,6 +53,8 @@ public:
     void searchByStreet();
     void searchByCity();
 
+    friend std::ostream& operator<<(std::ostream& os, const Student& student);
+
 private:
     std::string firstName_ = defaultName;
     std::string sureName_ = defaultName;

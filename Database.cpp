@@ -5,6 +5,25 @@ void Database::addStudent(Student student) {
 }
 
 void Database::printbyId(const size_t& id) {}
-void Database::printAll() {}
+
+std::ostream& operator<<(std::ostream& os, const Student& student)
+{
+    os << student.getFirstName() << " " << student.getSureName() << " " << student.getAddress() << " " << student.getIndexNumber() << " " << student.getPesel() << " " /*<< student.getGender()*/ << '\n';
+    return os;
+}
+
+void Database::printAll() {
+    
+    std::cout << "\t Database: \n";
+    
+    if (students_.empty()) 
+    std::cout << "Error! Empty Database!\n";
+
+    for (const auto& student : students_) {
+        std::cout << student;
+    }
+    std::cout << "\n";
+
+}
 void Database::saveToFile(std::string fileName) {}
 void Database::loadFromFile(std::string fileName) {}
