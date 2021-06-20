@@ -38,7 +38,7 @@ public:
     void setStreet(const std::string& street);
     void setNumberOfStreet(const std::string& numberOfStreet);
     void setIndexNumber(const size_t& indexNumber);
-    void setPesel(const std::string& numberOfStreet);
+    void setPesel(const std::string& pesel);
     void setGender(const Gender& gender);
 
     std::string getFirstName() const;
@@ -48,12 +48,7 @@ public:
     std::string getPesel() const;
     Gender getGender() const;
 
-    void searchByFirstName();
-    void searchBySecondName();
-    void searchByStreet();
-    void searchByCity();
-
-    friend std::ostream& operator<<(std::ostream& os, const Student& student);
+      friend std::ostream& operator<<(std::ostream& os, const Student& student);
 
 private:
     std::string firstName_ = defaultName;

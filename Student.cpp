@@ -66,7 +66,3 @@ Gender Student::getGender() const {
     return gender_;
 }
 
-void Student::searchByFirstName() {}
-void Student::searchBySecondName() {}
-void Student::searchByStreet() {}
-void Student::searchByCity() {}
