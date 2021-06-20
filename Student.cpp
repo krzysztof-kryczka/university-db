@@ -1,22 +1,19 @@
 #include "Student.hpp"
 
-Student::Student(std::string firstName
-    , std::string sureName
-    , std::string city
-    , std::string street
-    , std::string numberOfStreet
-    , size_t indexNumber
-    , std::string pesel
-    , Gender gender)
-    : firstName_(firstName), sureName_(sureName), address{city, street, numberOfStreet}, indexNumber_(indexNumber), pesel_(pesel), gender_(gender) 
-    {}
+std::map<Gender, std::string> translateGender{
+    {Gender::Male, "Male"},
+    {Gender::Female, "Female"},
+    {Gender::Undefined, "Undefined"}};
+
+Student::Student(std::string firstName, std::string surName, std::string city, std::string street, std::string numberOfStreet, size_t indexNumber, std::string pesel, Gender gender)
+    : firstName_(firstName), surName_(surName), address{city, street, numberOfStreet}, indexNumber_(indexNumber), pesel_(pesel), gender_(gender) {}
 
 void Student::setFirstName(const std::string& firstName) {
     firstName_ = firstName;
 }
 
-void Student::setSureName(const std::string& sureName) {
-    sureName_ = sureName;
+void Student::setSurName(const std::string& surName) {
+    surName_ = surName;
 }
 
 void Student::setCity(const std::string& city) {
@@ -46,11 +43,11 @@ std::string Student::getFirstName() const {
     return firstName_;
 }
 
-std::string Student::getSureName() const {
-    return sureName_;
+std::string Student::getSurName() const {
+    return surName_;
 }
 
-std::string Student::getAddress() const{
+std::string Student::getAddress() const {
     return address.getAddress();
 }
 
@@ -65,4 +62,3 @@ size_t Student::getIndexNumber() const {
 Gender Student::getGender() const {
     return gender_;
 }
-

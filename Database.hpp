@@ -1,7 +1,7 @@
 #pragma once
 
+#include <algorithm>
 #include <vector>
-
 #include "Student.hpp"
 
 class Database {
@@ -29,6 +29,20 @@ public:
     void searchByStreet();
     void searchByCity();
 
+
+    void sortByPesel() {
+        std::sort(begin(students_), end(students_), [](const auto& lhs, const auto& rhs) {
+            return std::less{}(lhs.getPesel(), rhs.getPesel());
+        });
+    }
+
+    void sortbySurename() {
+        std::sort(begin(students_), end(students_), [](const auto& lhs, const auto& rhs) {
+            return std::less{}(lhs.getSurName(), rhs.getSurName());
+        });
+    }
+
+void deleteByPesel(std::string pesel);   
 
 private:
     std::vector<Student> students_;
