@@ -26,5 +26,8 @@ int main() {
     std::cout<<"---------SAVE EXSISTS RECORD TO FILE-----------\n";
     db.saveToFile("db.txt");
     
+    db.deleteByPesel("12345678901");
+    db.printAll();
+
     return 0;
 }

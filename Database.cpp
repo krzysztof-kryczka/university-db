@@ -37,3 +37,12 @@ void Database::saveToFile(std::string fileName) {
     }
 }
 void Database::loadFromFile(std::string fileName) {}
+
+void Database::deleteByPesel(std::string pesel)
+{
+
+        auto it = std::find_if(begin(students_), end(students_),       
+                [pesel](auto student){return student.getPesel() == pesel;});
+                
+        students_.erase(it);
+}

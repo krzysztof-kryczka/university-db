@@ -26,6 +26,8 @@ public:
         });
     }
 
+void deleteByPesel(std::string pesel);   
+
 private:
     std::vector<Student> students_;
 };
