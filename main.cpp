@@ -35,7 +35,7 @@ int main() {
     if (!result.empty()) {
            for (const auto& el : result) {
                 std::cout << el.getFirstName() << "  ";
-                std::cout << el.getSureName() << ", ";
+                std::cout << el.getSurName() << ", ";
                 std::cout << el.getAddress() << " | Pesel: ";
                 std::cout << el.getPesel() << '\n';
            } 
