@@ -3,11 +3,15 @@
 #include <iostream>
 #include <string>
 
+#include <map>
+
 enum class Gender {
     Male,
     Female,
     Undefined
 };
+
+extern std::map<Gender, std::string> translateGender;
 
 constexpr auto defaultName = "UNDEFINED";
 
@@ -23,17 +27,10 @@ struct Address {
 
 class Student {
 public:
-    Student(std::string firstName
-    , std::string sureName
-    , std::string city
-    , std::string street
-    , std::string numberOfStreet
-    , size_t indexNumber
-    , std::string Pesel
-    , Gender Gender);
+    Student(std::string firstName, std::string surName, std::string city, std::string street, std::string numberOfStreet, size_t indexNumber, std::string Pesel, Gender Gender);
 
     void setFirstName(const std::string& firstName);
-    void setSureName(const std::string& sureName);
+    void setSurName(const std::string& surName);
     void setCity(const std::string& city);
     void setStreet(const std::string& street);
     void setNumberOfStreet(const std::string& numberOfStreet);
@@ -42,22 +39,17 @@ public:
     void setGender(const Gender& gender);
 
     std::string getFirstName() const;
-    std::string getSureName() const;
+    std::string getSurName() const;
     std::string getAddress() const;
     size_t getIndexNumber() const;
     std::string getPesel() const;
     Gender getGender() const;
 
-    void searchByFirstName();
-    void searchBySecondName();
-    void searchByStreet();
-    void searchByCity();
-
     friend std::ostream& operator<<(std::ostream& os, const Student& student);
 
 private:
     std::string firstName_ = defaultName;
-    std::string sureName_ = defaultName;
+    std::string surName_ = defaultName;
     Address address;
     size_t indexNumber_ = 0;
     std::string pesel_ = defaultName;
