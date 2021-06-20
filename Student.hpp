@@ -35,7 +35,7 @@ public:
     void setStreet(const std::string& street);
     void setNumberOfStreet(const std::string& numberOfStreet);
     void setIndexNumber(const size_t& indexNumber);
-    void setPesel(const std::string& numberOfStreet);
+    void setPesel(const std::string& pesel);
     void setGender(const Gender& gender);
 
     std::string getFirstName() const;
