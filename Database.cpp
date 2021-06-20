@@ -38,7 +38,24 @@ void Database::saveToFile(std::string fileName) {
     }
 }
 
-void Database::loadFromFile(std::string fileName) {}
+void Database::loadFromFile(std::string fileName) {
+    std::ifstream ifs;
+
+    std::string firstName, surName, city, street, numberOfStreet, pesel;
+    size_t indexNumber;
+    Gender gender;
+
+    ifs.open(fileName);
+    if (ifs.is_open()) {
+        while ( ifs >> firstName >> surName >> city >> street >> numberOfStreet >> indexNumber >> pesel >> translateGender[gender] ) {
+            Student s{firstName, surName, city, street, numberOfStreet, indexNumber, pesel, gender};
+            addStudent(s);
+        }
+    }
+    else {
+        std::cout << "Error. Invalid data";
+    }
+}
 
 void Database::deleteByPesel(std::string pesel) {
     auto it = std::remove_if(begin(students_), end(students_),
