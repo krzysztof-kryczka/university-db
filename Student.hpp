@@ -50,7 +50,7 @@ public:
 private:
     std::string firstName_ = defaultName;
     std::string surName_ = defaultName;
-    Address address;
+    Address address_;
     size_t indexNumber_ = 0;
     std::string pesel_ = defaultName;
     Gender gender_ = Gender::Undefined;

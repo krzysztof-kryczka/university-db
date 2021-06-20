@@ -6,7 +6,7 @@ std::map<Gender, std::string> translateGender{
     {Gender::Undefined, "Undefined"}};
 
 Student::Student(std::string firstName, std::string surName, std::string city, std::string street, std::string numberOfStreet, size_t indexNumber, std::string pesel, Gender gender)
-    : firstName_(firstName), surName_(surName), address{city, street, numberOfStreet}, indexNumber_(indexNumber), pesel_(pesel), gender_(gender) {}
+    : firstName_(firstName), surName_(surName), address_{city, street, numberOfStreet}, indexNumber_(indexNumber), pesel_(pesel), gender_(gender) {}
 
 void Student::setFirstName(const std::string& firstName) {
     firstName_ = firstName;
@@ -17,15 +17,15 @@ void Student::setSurName(const std::string& surName) {
 }
 
 void Student::setCity(const std::string& city) {
-    address.city_ = city;
+    address_.city_ = city;
 }
 
 void Student::setStreet(const std::string& street) {
-    address.street_ = street;
+    address_.street_ = street;
 }
 
 void Student::setNumberOfStreet(const std::string& numberOfStreet) {
-    address.numberOfStreet_ = numberOfStreet;
+    address_.numberOfStreet_ = numberOfStreet;
 }
 
 void Student::setPesel(const std::string& pesel) {
@@ -48,7 +48,7 @@ std::string Student::getSurName() const {
 }
 
 std::string Student::getAddress() const {
-    return address.getAddress();
+    return address_.getAddress();
 }
 
 std::string Student::getPesel() const {
