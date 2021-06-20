@@ -1,4 +1,5 @@
 #include "Database.hpp"
+#include <fstream>
 
 void Database::addStudent(Student student) {
     students_.push_back(student);
@@ -22,5 +23,17 @@ void Database::printAll() {
     }
     std::cout << "\n";
 }
-void Database::saveToFile(std::string fileName) {}
+void Database::saveToFile(std::string fileName) {
+    std::ofstream ofs;
+    ofs.open(fileName);
+
+    if(ofs.is_open()){
+        for(const auto& student : students_){
+            ofs << student;
+        }
+    }
+    else {
+        std::cout << "Error! Could not open " << fileName << " !\n";
+    }
+}
 void Database::loadFromFile(std::string fileName) {}

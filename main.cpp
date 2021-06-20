@@ -23,5 +23,8 @@ int main() {
     db.sortbySurename();
     db.printAll();
 
+    std::cout<<"---------SAVE EXSISTS RECORD TO FILE-----------\n";
+    db.saveToFile("db.txt");
+    
     return 0;
 }
