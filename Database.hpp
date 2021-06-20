@@ -13,8 +13,12 @@ public:
     void printAll();
     void saveToFile(std::string fileName);
     void loadFromFile(std::string fileName);
-    
-    std::vector<Student> searchByPesel (const std::string& pesel) const {
+
+    size_t getNumberOfStudents() const {
+        return students_.size();
+    }
+
+    std::vector<Student> searchByPesel(const std::string& pesel) const {
         std::vector<Student> result;
         for (const auto& el : students_) {
             std::cout << el.getPesel() << "  " << pesel << '\n';
@@ -24,10 +28,10 @@ public:
         }
         return result;
     }
-    void searchByFirstName();
-    void searchBySecondName();
-    void searchByStreet();
-    void searchByCity();
+    std::vector<Student> searchByFirstName(const std::string& firstname);
+    std::vector<Student> searchBySecondName(const std::string& secondname);
+    std::vector<Student> searchByStreet(const std::string& street);
+    std::vector<Student> searchByCity(const std::string& city);
 
     void sortByPesel() {
         std::sort(begin(students_), end(students_), [](const auto& lhs, const auto& rhs) {
@@ -41,7 +45,7 @@ public:
         });
     }
 
-void deleteByPesel(std::string pesel);   
+    void deleteByPesel(std::string pesel);
 
 private:
     std::vector<Student> students_;
