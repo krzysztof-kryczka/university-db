@@ -42,5 +42,10 @@ int main() {
     else {
         std::cout << "Not found Student with this pesel\n";
     }
+
+    std::cout<<"---------LOAD EXSISTS RECORD FROM FILE-----------\n";
+    db.loadFromFile("db.txt");
+    db.printAll();
+
     return 0;
 }

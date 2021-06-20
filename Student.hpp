@@ -39,7 +39,7 @@ public:
     void setGender(const Gender& gender);
 
     std::string getFirstName() const;
-    std::string getSureName() const;
+    std::string getSurName() const;
     std::string getAddress() const;
     size_t getIndexNumber() const;
     std::string getPesel() const;
