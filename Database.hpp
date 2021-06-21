@@ -9,16 +9,16 @@ public:
     Database() {}
 
     void addStudent(Student student);
-    void printById(const size_t& id);
-    void printAll();
-    void saveToFile(std::string fileName);
+    void printById(const size_t& id)const;
+    void printAll()const;
+    void saveToFile(std::string fileName)const;
     void loadFromFile(std::string fileName);
 
     size_t getNumberOfStudents() const;
 
     std::vector<Student> searchByPesel(const std::string& pesel) const;
-    std::vector<Student> searchByFirstName(const std::string& firstname) const;
-    std::vector<Student> searchBySurName(const std::string& surname) const;
+    std::vector<Student> searchByFirstName(const std::string& firstName) const;
+    std::vector<Student> searchBySurName(const std::string& surName) const;
     std::vector<Student> searchByStreet(const std::string& street) const;
     std::vector<Student> searchByCity(const std::string& city) const;
 
@@ -26,6 +26,7 @@ public:
     void sortBySurName();
 
     void deleteByPesel(std::string pesel);
+    void deleteByIndex(size_t indexNumber);
 
 private:
     std::vector<Student> students_;
