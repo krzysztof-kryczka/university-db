@@ -9,41 +9,21 @@ public:
     Database() {}
 
     void addStudent(Student student);
-    void printbyId(const size_t& id);
-    void printAll();
-    void saveToFile(std::string fileName);
+    void printById(const size_t& id)const;
+    void printAll()const;
+    void saveToFile(std::string fileName)const;
     void loadFromFile(std::string fileName);
 
-    size_t getNumberOfStudents() const {
-        return students_.size();
-    }
+    size_t getNumberOfStudents() const;
 
-    std::vector<Student> searchByPesel(const std::string& pesel) const {
-        std::vector<Student> result;
-        for (const auto& el : students_) {
-            std::cout << el.getPesel() << "  " << pesel << '\n';
-            if (el.getPesel().compare(pesel) == 0) {
-                result.push_back(el);
-            }
-        }
-        return result;
-    }
-    std::vector<Student> searchByFirstName(const std::string& firstname);
-    std::vector<Student> searchBySecondName(const std::string& secondname);
-    std::vector<Student> searchByStreet(const std::string& street);
-    std::vector<Student> searchByCity(const std::string& city);
+    std::vector<Student> searchByPesel(const std::string& pesel) const;
+    std::vector<Student> searchByFirstName(const std::string& firstName) const;
+    std::vector<Student> searchBySurName(const std::string& surName) const;
+    std::vector<Student> searchByStreet(const std::string& street) const;
+    std::vector<Student> searchByCity(const std::string& city) const;
 
-    void sortByPesel() {
-        std::sort(begin(students_), end(students_), [](const auto& lhs, const auto& rhs) {
-            return std::less{}(lhs.getPesel(), rhs.getPesel());
-        });
-    }
-
-    void sortbySurename() {
-        std::sort(begin(students_), end(students_), [](const auto& lhs, const auto& rhs) {
-            return std::less{}(lhs.getSurName(), rhs.getSurName());
-        });
-    }
+    void sortByPesel();
+    void sortBySurName();
 
     void deleteByPesel(std::string pesel);
     void deleteByIndex(size_t indexNumber);
