@@ -62,3 +62,10 @@ void Database::deleteByPesel(std::string pesel) {
                            [pesel](auto student) { return student.getPesel() == pesel; });
     students_.erase(it, students_.end());
 }
+
+
+void Database::deleteByIndex(size_t indexNumber) {
+    auto it = std::remove_if(begin(students_), end(students_),
+                           [indexNumber](auto student) { return student.getIndexNumber()  == indexNumber; });
+    students_.erase(it, students_.end());
+}

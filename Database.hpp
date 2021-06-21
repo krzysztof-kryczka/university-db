@@ -46,6 +46,7 @@ public:
     }
 
     void deleteByPesel(std::string pesel);
+    void deleteByIndex(size_t indexNumber);
 
 private:
     std::vector<Student> students_;
