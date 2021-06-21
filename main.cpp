@@ -43,17 +43,14 @@ int main() {
     else {
         std::cout << "Not found Student with this pesel\n";
     }
-
     std::cout<<"---------LOAD EXSISTS RECORD FROM FILE-----------\n";
     db.loadFromFile("db.txt");
     db.printAll();
-
     bool peselValid = testCheckPesel("12345678901");
     if(peselValid) {
         std::cout << "valid" << '\n';
     } else {
         std::cout << "Pesel not valid" << '\n';
     }
-
     return 0;
 }
