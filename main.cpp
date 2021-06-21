@@ -28,7 +28,8 @@ int main() {
     db.saveToFile("db.txt");
     
     db.deleteByPesel("12345678901");
-
+    db.deleteByIndex(123);
+    
     db.printAll();
     auto result = db.searchByPesel("98876543210");
     if (!result.empty()) {
