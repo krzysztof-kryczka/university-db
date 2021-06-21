@@ -47,6 +47,8 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const Student& student);
 
+
+
 private:
     std::string firstName_ = defaultName;
     std::string surName_ = defaultName;
@@ -55,3 +57,5 @@ private:
     std::string pesel_ = defaultName;
     Gender gender_ = Gender::Undefined;
 };
+
+    bool testCheckPesel (std::string pesel);

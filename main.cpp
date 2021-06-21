@@ -7,6 +7,7 @@ int main() {
     Student student{"Jan", "Nowak", "Poznań", "smutna", "1", 123, "12345678901", Gender::Male};
     Student student2{"Anna", "Kowalska", "Katowice", "wesoła", "1", 4321, "98876543210", Gender::Female};
     Student student3{"Justyna", "Dunka", "Poznan", "wesoła", "1", 4321, "98876543210", Gender::Female};
+    std::cout << testCheckPesel ("12345678901");
 
      Database db;
     db.printAll();
@@ -46,6 +47,13 @@ int main() {
     std::cout<<"---------LOAD EXSISTS RECORD FROM FILE-----------\n";
     db.loadFromFile("db.txt");
     db.printAll();
+
+    bool peselValid = testCheckPesel("12345678901");
+    if(peselValid) {
+        std::cout << "valid" << '\n';
+    } else {
+        std::cout << "Pesel not valid" << '\n';
+    }
 
     return 0;
 }
