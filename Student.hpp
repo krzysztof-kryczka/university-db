@@ -14,7 +14,6 @@ enum class Gender {
 extern std::map<Gender, std::string> translateGender;
 
 constexpr auto defaultName = "UNDEFINED";
-
 struct Address {
     std::string city_ = defaultName;
     std::string street_ = defaultName;
@@ -24,7 +23,6 @@ struct Address {
         return city_ + " " + street_ + " " + numberOfStreet_;
     }
 };
-
 class Student {
 public:
     Student(std::string firstName, std::string surName, std::string city, std::string street, std::string numberOfStreet, size_t indexNumber, std::string Pesel, Gender Gender);
@@ -55,3 +53,4 @@ private:
     std::string pesel_ = defaultName;
     Gender gender_ = Gender::Undefined;
 };
+    bool testCheckPesel (std::string pesel);
