@@ -50,6 +50,12 @@ size_t Student::getIndexNumber() const {
 Gender Student::getGender() const {
     return gender_;
 }
+std::string Student::getCity() const {
+    return address_.city_;
+}
+std::string Student::getStreet() const {
+    return address_.street_;
+}
 bool checkPesel(std::string pesel) {
     const std::string& listValidation = "1379137913";
     int sum = 0;
