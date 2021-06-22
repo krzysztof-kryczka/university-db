@@ -29,6 +29,7 @@ public:
     void deleteByPesel(std::string pesel);
     void deleteByIndex(size_t indexNumber);
     void deleteByFirstName(std::string FirstName);
+    void deleteBySurName(std::string SurName);
 
 private:
     std::vector<Student> students_;

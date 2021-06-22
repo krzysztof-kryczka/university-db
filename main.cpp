@@ -61,6 +61,7 @@ void useCaseDeleteDb(Database& db) {
     db.deleteByPesel("12345678901");
     db.deleteByIndex(123);
     db.deleteByFirstName("Jan");
+    db.deleteBySurName("Nowak");
     db.printAll();
 }
 
