@@ -29,11 +29,17 @@ void Menu::run() {
     }
 }
 
-void Menu::printMenu(){
-    showMenu();
+void Menu::printStudent(const Student& student) const {
+    std::cout << "*******************************************\n";
+    std::cout << "FirstName: " << student.getFirstName() << '\n';
+    std::cout << "SurName:   " << student.getSurName() << '\n';
+    std::cout << "Address:   " << student.getAddress() << '\n';
+    std::cout << "Index:     " << student.getIndexNumber() << '\n';
+    std::cout << "Pesel:     " << student.getPesel() << '\n';
+    std::cout << "*******************************************\n";
 }
 
-void Menu::printAllRecords(){
+void Menu::printAllRecords() {
     std::cout << "---------PRINT RECORDS FROM FILE-----------\n";
     db_.printAll();
 }
@@ -112,8 +118,43 @@ void Menu::sortByPesel() {
     db_.sortByPesel();
     db_.printAll();
 }
-void Menu::searchBySurname() {
-    std::cout << "NOT IMPMLEMENTED\n";
+void Menu::searchOption() {
+    std::vector<Student> result;
+    std::string what;
+    std::cout << "Enter the search type: firstname / surname / city / street" << what << ":";
+    std::cin >> what;
+
+    if (what == "surname") {
+        std::string sn;
+        std::cout << "enter the search " << what << ": ";
+        std::cin >> sn;
+        result = db_.searchBySurName(sn);
+    } else if (what == "firstname") {
+        std::string fn;
+        std::cout << "enter the search " << what << ": ";
+        std::cin >> fn;
+        result = db_.searchByFirstName(fn);
+    } else if (what == "city") {
+        std::string ct;
+        std::cout << "enter the search " << what << ": ";
+        std::cin >> ct;
+        result = db_.searchByCity(ct);
+    } else if (what == "street") {
+        std::string st;
+        std::cout << "enter the search " << what << ": ";
+        std::cin >> st;
+        result = db_.searchByStreet(st);
+    } else {
+        std::cout << "Error. Unknown option, please choose from : surname, firstname, city, street\n";
+        return;
+    }
+    if (!result.empty()) {
+        for (const auto& el : result) {
+            Menu::printStudent(el);
+        }
+    } else {
+        std::cout << "Not found Student with this " << what << '\n';
+    }
 }
 void Menu::searchByPesel() {
     std::string p;
@@ -121,17 +162,8 @@ void Menu::searchByPesel() {
     std::cin >> p;
     auto result = db_.searchByPesel(p);
     if (!result.empty()) {
-        int i = 1;
         for (const auto& el : result) {
-            //std::cout << el;  //better but used for save file by now
-            std::cout << "\n****************** record: " << i << " ******************\n";
-            std::cout << "FirstName: " << el.getFirstName() << '\n';
-            std::cout << "SurName:   " << el.getSurName() << '\n';
-            std::cout << "Address:   " << el.getAddress() << '\n';
-            std::cout << "Index:     " << el.getIndexNumber() << '\n';
-            std::cout << "Pesel:     " << el.getPesel() << '\n';
-            std::cout << "***********************************************\n";
-            i++;
+            Menu::printStudent(el);
         }
     } else {
         std::cout << "Not found Student with this pesel\n";

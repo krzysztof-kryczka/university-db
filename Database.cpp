@@ -37,6 +37,7 @@ void Database::saveToFile(std::string fileName) const {
     }
 }
 void Database::loadFromFile(std::string fileName) {
+    students_.clear();
     std::ifstream ifs;
 
     std::string firstName, surName, city, street, numberOfStreet, pesel;

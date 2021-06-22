@@ -8,8 +8,7 @@ public:
     Menu() {}
     void run();
 private:
-    void showMenu() const;
-
+    
     struct Option {
         using CallMethod = void (Menu::*)();
         CallMethod caledMethod;
@@ -17,13 +16,13 @@ private:
     };
 
     std::vector<Option> options_{
-        {&Menu::printMenu, "Print Menu"},
+        {&Menu::printMenu, "Show Menu"},
         {&Menu::printAllRecords, "Print All Records"},
         {&Menu::loadRecords, "Load Record"},
         {&Menu::addStudent, "Add Student"},
         {&Menu::sortBySurname, "Sort By Surname"},
         {&Menu::sortByPesel, "Sort By Pesel"},
-        {&Menu::searchBySurname, "Search By Surname"},
+        {&Menu::searchOption, "Search"},
         {&Menu::searchByPesel, "Search By Pesel"},
         {&Menu::deleteByPesel, "Delete By Pesel"},
         {&Menu::deleteByIndexNumber, "Delete By Index"},
@@ -31,20 +30,31 @@ private:
         {&Menu::saveRecords, "Save Records"},
         {&Menu::endProgram, "End Program"}};
 
-    void printMenu();
+    void showMenu() const;
+
+    void printMenu(){showMenu();}
+
     void printAllRecords();
+
     void loadRecords();
+
     void addStudent();
+
     void sortBySurname();
     void sortByPesel();
-    void searchBySurname();
+
+    void searchOption();
     void searchByPesel();
+
     void deleteByPesel();
     void deleteByIndexNumber();
+
     void validatePeselNumber();
     void saveRecords();
     void endProgram();
 
     bool menuQuit = false;
     Database db_;
+
+    void printStudent(const Student& student) const;
 };
