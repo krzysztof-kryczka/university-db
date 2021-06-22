@@ -7,7 +7,7 @@
 class Database {
 public:
     Database() {}
-
+    
     void addStudent(Student student);
     void printById(const size_t& id)const;
     void printAll()const;
@@ -27,6 +27,8 @@ public:
 
     void deleteByPesel(std::string pesel);
     void deleteByIndex(size_t indexNumber);
+    void deleteByFirstName(std::string FirstName);
+    void deleteBySurName(std::string SurName);
 
 private:
     std::vector<Student> students_;

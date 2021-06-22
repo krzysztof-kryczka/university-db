@@ -36,7 +36,6 @@ void Database::saveToFile(std::string fileName) const {
         std::cout << "Error! Could not open " << fileName << " !\n";
     }
 }
-
 void Database::loadFromFile(std::string fileName) {
     std::ifstream ifs;
 
@@ -62,7 +61,46 @@ size_t Database::getNumberOfStudents() const {
 std::vector<Student> Database::searchByPesel(const std::string& pesel) const {
     std::vector<Student> result;
     for (const auto& el : students_) {
-        if (el.getPesel().compare(pesel) == 0) {
+        if (el.getPesel() == pesel) {
+            result.push_back(el);
+        }
+    }
+    return result;
+}
+
+std::vector<Student> Database::searchByFirstName(const std::string& firstName) const {
+    std::vector<Student> result;
+    for (const auto& el : students_) {
+        if (el.getFirstName() == firstName) {
+            result.push_back(el);
+        }
+    }
+    return result;
+}
+
+std::vector<Student> Database::searchBySurName(const std::string& surName) const {
+    std::vector<Student> result;
+    for (const auto& el : students_) {
+        if (el.getSurName() == surName) {
+            result.push_back(el);
+        }
+    }
+    return result;
+}
+std::vector<Student> Database::searchByStreet(const std::string& street) const {
+    std::vector<Student> result;
+    for (const auto& el : students_) {
+        if (el.getStreet() == street) {
+            result.push_back(el);
+        }
+    }
+    return result;
+}
+
+std::vector<Student> Database::searchByCity(const std::string& city) const {
+    std::vector<Student> result;
+    for (const auto& el : students_) {
+        if (el.getCity() == city) {
             result.push_back(el);
         }
     }
@@ -83,12 +121,22 @@ void Database::sortBySurName() {
 
 void Database::deleteByPesel(std::string pesel) {
     auto it = std::remove_if(begin(students_), end(students_),
-                             [pesel](auto student) { return student.getPesel() == pesel; });
+                             [pesel](const auto& student) { return student.getPesel() == pesel; });
     students_.erase(it, students_.end());
 }
 
 void Database::deleteByIndex(size_t indexNumber) {
     auto it = std::remove_if(begin(students_), end(students_),
-                             [indexNumber](auto student) { return student.getIndexNumber() == indexNumber; });
+                             [indexNumber](const auto& student) { return student.getIndexNumber() == indexNumber; });
+    students_.erase(it, students_.end());
+}
+void Database::deleteByFirstName(std::string FirstName) {
+    auto it = std::remove_if(begin(students_), end(students_),
+                             [FirstName](const auto& student) { return student.getFirstName() == FirstName; });
+    students_.erase(it, students_.end());
+}
+void Database::deleteBySurName(std::string SurName) {
+    auto it = std::remove_if(begin(students_), end(students_),
+                             [SurName](const auto& student) { return student.getSurName() == SurName; });
     students_.erase(it, students_.end());
 }

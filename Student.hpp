@@ -41,7 +41,9 @@ public:
     size_t getIndexNumber() const;
     std::string getPesel() const;
     Gender getGender() const;
-
+    std::string getCity() const;
+    std::string getStreet() const;
+    
     friend std::ostream& operator<<(std::ostream& os, const Student& student);
 
 private:

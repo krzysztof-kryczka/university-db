@@ -11,45 +11,67 @@ Student::Student(std::string firstName, std::string surName, std::string city, s
 void Student::setFirstName(const std::string& firstName) {
     firstName_ = firstName;
 }
+
 void Student::setSurName(const std::string& surName) {
     surName_ = surName;
 }
+
 void Student::setCity(const std::string& city) {
     address_.city_ = city;
 }
+
 void Student::setStreet(const std::string& street) {
     address_.street_ = street;
 }
+
 void Student::setNumberOfStreet(const std::string& numberOfStreet) {
     address_.numberOfStreet_ = numberOfStreet;
 }
+
 void Student::setPesel(const std::string& pesel) {
     pesel_ = pesel;
 }
+
 void Student::setGender(const Gender& gender) {
     gender_ = gender;
 }
+
 void Student::setIndexNumber(const size_t& indexNumber) {
     indexNumber_ = indexNumber;
 }
+
 std::string Student::getFirstName() const {
     return firstName_;
 }
+
 std::string Student::getSurName() const {
     return surName_;
 }
+
 std::string Student::getAddress() const {
     return address_.getAddress();
 }
+
 std::string Student::getPesel() const {
     return pesel_;
 }
+
 size_t Student::getIndexNumber() const {
     return indexNumber_;
 }
+
 Gender Student::getGender() const {
     return gender_;
 }
+
+std::string Student::getCity() const {
+    return address_.city_;
+}
+
+std::string Student::getStreet() const {
+    return address_.street_;
+}
+
 bool checkPesel(std::string pesel) {
     const std::string& listValidation = "1379137913";
     int sum = 0;
