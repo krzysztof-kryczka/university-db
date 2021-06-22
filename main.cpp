@@ -17,6 +17,8 @@ int main() {
 
     Menu mnu;
     mnu.selectOption(db);
+
+    return 0;
 }
 
 void printStudent(const Student& student) {

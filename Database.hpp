@@ -8,6 +8,7 @@ class Database {
 public:
     Database() {}
 
+    void addStudent();
     void addStudent(Student student);
     void printById(const size_t& id)const;
     void printAll()const;

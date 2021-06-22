@@ -10,6 +10,44 @@ void Database::addStudent(Student student) {
     students_.push_back(student);
 }
 
+void Database::addStudent() {
+    std::string firstName, surName, city, street, numberOfStreet, pesel;
+    size_t indexNumber;
+    Gender gender;
+    
+    std::cout << "\n First Name: ";
+    std::cin >> firstName;
+
+    std::cout << " Surname: ";
+    std::cin >> surName;
+
+    std::cout << " Address (city): ";
+    std::cin >> city;
+
+    std::cout << " Address (street): ";
+    std::cin >> street;
+
+    std::cout << " Address (numberOfStreet): ";
+    std::cin >> numberOfStreet;
+
+    std::cout << " Pesel: ";
+    std::cin >> pesel;
+
+    std::cout << " Index Number: ";
+    std::cin >> indexNumber;
+
+    std::cout << " Gender [male][female][Undefined] : ";
+    std::cin >> translateGender[gender];
+
+    if (checkPesel(pesel)) {
+        Student s{firstName, surName, city, street, numberOfStreet, indexNumber, pesel, gender};
+        addStudent(s);
+        std::cout << "Student added.\n";
+    } else {
+        std::cout << "\nError: wrong PESEL number! Student not added! \n\n";
+    }
+}
+
 void Database::printById(const size_t& id) const {}
 
 void Database::printAll() const {

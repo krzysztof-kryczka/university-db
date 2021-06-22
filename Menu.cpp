@@ -34,13 +34,7 @@ void Menu::selectOption(Database& db) const {
             break;
         }
         case 2: {
-            Student student{"Aleks", "Dudek", "Wrocław", "polna", "5a", 67856, "12345738901", Gender::Male};
-            Student student2{"Beata", "Nicpoń", "Warszawa", "wiejska", "3", 54375, "67876543210", Gender::Female};
-            Student student3{"Justyna", "Dunka", "Kraków", "zaorana", "2b", 13, "966765454210", Gender::Female};
-
-            db.addStudent(student);
-            db.addStudent(student2);
-            db.addStudent(student3);
+            db.addStudent();
             db.printAll();
             break;
         }
