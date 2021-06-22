@@ -11,4 +11,5 @@ public:
 
 private:
     void showMenu() const;
+    void printStudent(const Student& student) const;
 };
