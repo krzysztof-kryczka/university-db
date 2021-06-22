@@ -1,6 +1,6 @@
 #include "Database.hpp"
 #include "Student.hpp"
-
+#include "Menu.hpp"
 #include <iostream>
 
 void printStudent(const Student& student);
@@ -12,25 +12,11 @@ void useCaseSearchDb(const Database& db);
 void useCaseLoadDb(Database& db);
 
 int main() {
-    Student student{"Jan", "Nowak", "Poznań", "smutna", "1", 123, "12345678901", Gender::Male};
-    Student student2{"Anna", "Kowalska", "Katowice", "wesoła", "1", 4321, "98876543210", Gender::Female};
-    Student student3{"Justyna", "Dunka", "Poznan", "wesoła", "1", 4321, "98876543210", Gender::Female};
-
     Database db;
     db.printAll();  //for empty db print
 
-    db.addStudent(student);
-    db.addStudent(student2);
-    db.addStudent(student3);
-
-    useCaseSort(db);
-    useCaseSaveDb(db);
-    useCaseDeleteDb(db);
-    useCaseSearchDb(db);
-    useCaseLoadDb(db);
-    useCaseCheckPesel();
-
-    return 0;
+    Menu mnu;
+    mnu.selectOption(db);
 }
 
 void printStudent(const Student& student) {
@@ -55,6 +41,7 @@ void useCaseSort(Database& db) {
 }
 
 void useCaseCheckPesel() {
+    std::cout << "---------CHECK PESEL-----------\n";
     bool peselValid = checkPesel("12345678901");
     if (peselValid) {
         std::cout << "Pesel valid\n";
