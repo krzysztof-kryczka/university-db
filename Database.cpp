@@ -130,3 +130,9 @@ void Database::deleteByIndex(size_t indexNumber) {
                              [indexNumber](auto student) { return student.getIndexNumber() == indexNumber; });
     students_.erase(it, students_.end());
 }
+void Database::deleteByFirstName(std::string FirstName){
+     auto it = std::remove_if(begin(students_), end(students_),
+                             [FirstName](auto student) { return student.getFirstName() == FirstName; });
+    students_.erase(it, students_.end());
+
+}
