@@ -74,7 +74,6 @@ void Database::saveToFile(std::string fileName) const {
         std::cout << "Error! Could not open " << fileName << " !\n";
     }
 }
-
 void Database::loadFromFile(std::string fileName) {
     std::ifstream ifs;
 
@@ -100,7 +99,46 @@ size_t Database::getNumberOfStudents() const {
 std::vector<Student> Database::searchByPesel(const std::string& pesel) const {
     std::vector<Student> result;
     for (const auto& el : students_) {
-        if (el.getPesel().compare(pesel) == 0) {
+        if (el.getPesel() == pesel) {
+            result.push_back(el);
+        }
+    }
+    return result;
+}
+
+std::vector<Student> Database::searchByFirstName(const std::string& firstName) const {
+    std::vector<Student> result;
+    for (const auto& el : students_) {
+        if (el.getFirstName() == firstName) {
+            result.push_back(el);
+        }
+    }
+    return result;
+}
+
+std::vector<Student> Database::searchBySurName(const std::string& surName) const {
+    std::vector<Student> result;
+    for (const auto& el : students_) {
+        if (el.getSurName() == surName) {
+            result.push_back(el);
+        }
+    }
+    return result;
+}
+std::vector<Student> Database::searchByStreet(const std::string& street) const {
+    std::vector <Student> result;
+    for (const auto& el : students_) {
+        if (el.getStreet() == street) {
+            result.push_back(el);
+        }
+    }
+    return result;
+}
+
+std::vector<Student> Database::searchByCity(const std::string& city) const {
+    std::vector<Student> result;
+    for (const auto& el : students_) {
+        if (el.getCity() == city) {
             result.push_back(el);
         }
     }
