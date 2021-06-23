@@ -6,7 +6,7 @@ std::ostream& operator<<(std::ostream& os, const Student& student) {
     return os;
 }
 
-void Database::addStudent(Student student) {
+bool Database::addStudent(Student student) {
 
     auto exist = std::any_of(begin(students_), end(students_), [&student](const auto& other){
         return student.getPesel() == other.getPesel();
@@ -14,9 +14,10 @@ void Database::addStudent(Student student) {
 
     if(exist){
         std::cout << "Student already exist. Adding abort.\n";
-        return;
+        return false;
     }
     students_.push_back(student);
+    return true;
 }
 
 void Database::printById(const size_t& id) const {}

@@ -102,8 +102,13 @@ void Menu::addStudent() {
 
         if (checkPesel(pesel)) {
             Student s{firstName, surName, city, street, numberOfStreet, index, pesel, gender};
-            db_.addStudent(s);
-            std::cout << "Student added.\n";
+            auto isSuccess = db_.addStudent(s);
+            if (isSuccess) {
+                std::cout << "Student added.\n";
+            }
+            else {
+                std::cout << "Student NOT added.\n";
+            }
             return;
         }
 
