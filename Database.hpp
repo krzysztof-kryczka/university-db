@@ -8,7 +8,7 @@ class Database {
 public:
     Database() {}
     
-    void addStudent(Student student);
+    bool addStudent(Student student);
     void printById(const size_t& id)const;
     void printAll()const;
     void saveToFile(std::string fileName)const;
