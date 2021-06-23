@@ -52,8 +52,9 @@ TEST_CASE("Add Student to empty database", "[Database][Add]") {
     //given
     Database db{};
     //when
-    db.addStudent(students[0]);
+    auto isSuccess = db.addStudent(students[0]);
     //then
+    REQUIRE(isSuccess);
     REQUIRE(db.getNumberOfStudents() == 1);
 }
 
@@ -65,13 +66,13 @@ TEST_CASE("Add new Student to existing database", "[Database][Add]") {
     }
     auto sizeBefore = db.getNumberOfStudents();
     //when
-    db.addStudent(otherStudent);
+    auto isSuccess = db.addStudent(otherStudent);
     //then
+    REQUIRE(isSuccess);
     REQUIRE(db.getNumberOfStudents() == sizeBefore + 1);
 }
 
-//should not add existing student
-TEST_CASE("Add existing in database student", "[Database][Add]") {
+TEST_CASE("Skipp adding existing student in database", "[Database][Add]") {
     //given
     Database db{};
     for (const auto& student : students) {
@@ -79,8 +80,9 @@ TEST_CASE("Add existing in database student", "[Database][Add]") {
     }
     auto sizeBefore = db.getNumberOfStudents();
     //when
-    db.addStudent(students[0]);
+    auto isSuccess = db.addStudent(students[0]);
     //then
+    REQUIRE(!isSuccess);
     REQUIRE(db.getNumberOfStudents() == sizeBefore);
 }
 
