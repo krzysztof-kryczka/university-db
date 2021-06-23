@@ -30,6 +30,24 @@ const std::vector students = {
 
 constexpr auto baseStudentsSize = 3;
 
+TEST_CASE("Validate wrong PESEL","[PESEL]"){
+    //given
+    auto wrongPesel = "12345678901";
+    //when
+    auto result = checkPesel(wrongPesel);
+    //then
+    REQUIRE(result == false);
+}
+
+TEST_CASE("Validate good PESEL","[PESEL]"){
+    //given
+    auto goodPesel = "24090833676";
+    //when
+    auto result = checkPesel(goodPesel);
+    //then
+    REQUIRE(result == true);
+}
+
 TEST_CASE("Add Student to empty database", "[Database][Add]") {
     //given
     Database db{};
