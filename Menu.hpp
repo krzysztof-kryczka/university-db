@@ -11,19 +11,19 @@ private:
     
     struct Option {
         using CallMethod = void (Menu::*)();
-        CallMethod caledMethod;
+        CallMethod calledMethod;
         std::string optionDescription;
     };
 
-    std::vector<Option> options_{
+    const std::vector<Option> options_{
         {&Menu::printMenu, "Show Menu"},
         {&Menu::printAllRecords, "Print All Records"},
         {&Menu::loadRecords, "Load Record"},
         {&Menu::addStudent, "Add Student"},
-        {&Menu::sortBySurname, "Sort By Surname"},
-        {&Menu::sortByPesel, "Sort By Pesel"},
         {&Menu::searchOption, "Search"},
         {&Menu::searchByPesel, "Search By Pesel"},
+        {&Menu::sortBySurname, "Sort By Surname"},
+        {&Menu::sortByPesel, "Sort By Pesel"},
         {&Menu::deleteByPesel, "Delete By Pesel"},
         {&Menu::deleteByIndexNumber, "Delete By Index"},
         {&Menu::validatePeselNumber, "Validate PESEL"},
