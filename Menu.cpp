@@ -11,12 +11,12 @@ void Menu::showMenu() const {
 }
 
 void Menu::run() {
-    size_t chosedOption = options_.size();
+    std::string chosedOption;
     Menu::showMenu();
 
     auto runOption = [this](size_t index) {
         if (index >= 0 and index < options_.size()) {
-            (this->*options_[index].caledMethod)();  //ugly i know
+            (this->*options_[index].calledMethod)();  //ugly i know
         } else {
             std::cout << "Wrong option!\n";
         }
@@ -25,7 +25,13 @@ void Menu::run() {
     while (!menuQuit) {
         std::cout << "Select Option: ";
         std::cin >> chosedOption;
-        runOption(chosedOption);
+        size_t indexOption = 0;
+        try {
+            indexOption = std::stoi(chosedOption);
+        } catch (...) {
+        }
+
+        runOption(indexOption);
     }
 }
 
@@ -49,9 +55,15 @@ void Menu::loadRecords() {
     db_.loadFromFile("db.txt");
 }
 void Menu::addStudent() {
-    std::string firstName, surName, city, street, numberOfStreet, pesel;
-    size_t indexNumber;
+    std::string firstName;
+    std::string surName;
+    std::string city;
+    std::string street;
+    std::string numberOfStreet;
+    std::string pesel;
+    std::string indexNumber;
     std::string genderInput;
+    size_t index;
     Gender gender = Gender::Undefined;
 
     std::cout << "\n First Name: ";
@@ -71,8 +83,9 @@ void Menu::addStudent() {
 
     std::cout << " Index Number: ";
     std::cin >> indexNumber;
+    index = std::stoi(indexNumber);
 
-    std::cout << " Gender [male][female][Undefined] : ";
+    std::cout << " Gender [Male][Female][Undefined] : ";
     std::cin >> genderInput;
 
     std::vector sexes{Gender::Male, Gender::Female, Gender::Undefined};
@@ -88,7 +101,7 @@ void Menu::addStudent() {
         std::cin >> pesel;
 
         if (checkPesel(pesel)) {
-            Student s{firstName, surName, city, street, numberOfStreet, indexNumber, pesel, gender};
+            Student s{firstName, surName, city, street, numberOfStreet, index, pesel, gender};
             db_.addStudent(s);
             std::cout << "Student added.\n";
             return;
