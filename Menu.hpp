@@ -1,14 +1,13 @@
 #pragma once
 #include <iostream>
 #include "Database.hpp"
-#include "Student.hpp"
 
 class Menu {
 public:
     Menu() {}
     void run();
+
 private:
-    
     struct Option {
         using CallMethod = void (Menu::*)();
         CallMethod calledMethod;
@@ -31,30 +30,22 @@ private:
         {&Menu::endProgram, "End Program"}};
 
     void showMenu() const;
-
-    void printMenu(){showMenu();}
-
+    void printMenu() { showMenu(); }
     void printAllRecords();
-
     void loadRecords();
-
     void addStudent();
-
     void sortBySurname();
     void sortByPesel();
-
     void searchOption();
     void searchByPesel();
-
     void deleteByPesel();
     void deleteByIndexNumber();
-
     void validatePeselNumber();
     void saveRecords();
     void endProgram();
 
+    void printStudent(const Student& student) const;
+
     bool menuQuit = false;
     Database db_;
-
-    void printStudent(const Student& student) const;
 };

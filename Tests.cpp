@@ -1,8 +1,8 @@
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 #include <catch/catch.hpp>
 
-#include <vector>
 #include <array>
+#include <vector>
 #include "Database.hpp"
 
 constexpr auto nonExistPesel = "90000000000";
@@ -23,14 +23,13 @@ constexpr std::array studentSurName = {
 Student otherStudent(studentName[4], studentSurName[4], "A", "A", "A", 0, nonExistPesel, Gender::Undefined);
 
 const std::vector students = {
-    Student(studentName[0], studentSurName[0], "A", "A", "A", 0, anotherExistPesel, Gender::Undefined), 
-    Student(studentName[1], studentSurName[1], "A", "A", "A", 1, onceExistPesel, Gender::Undefined), 
-    Student(studentName[2], studentSurName[2], "A", "A", "A", 2, secondExistPesel, Gender::Undefined)
-};
+    Student(studentName[0], studentSurName[0], "A", "A", "A", 0, anotherExistPesel, Gender::Undefined),
+    Student(studentName[1], studentSurName[1], "A", "A", "A", 1, onceExistPesel, Gender::Undefined),
+    Student(studentName[2], studentSurName[2], "A", "A", "A", 2, secondExistPesel, Gender::Undefined)};
 
 constexpr auto baseStudentsSize = 3;
 
-TEST_CASE("Validate wrong PESEL","[PESEL]"){
+TEST_CASE("Validate wrong PESEL", "[PESEL]") {
     //given
     auto wrongPesel = "12345678901";
     //when
@@ -39,7 +38,7 @@ TEST_CASE("Validate wrong PESEL","[PESEL]"){
     REQUIRE(result == false);
 }
 
-TEST_CASE("Validate good PESEL","[PESEL]"){
+TEST_CASE("Validate good PESEL", "[PESEL]") {
     //given
     auto goodPesel = "24090833676";
     //when
@@ -215,5 +214,5 @@ TEST_CASE("Delete by PESEL exist once in database", "[Database][Delete][PESEL]")
     //when
     db.deleteByPesel(onceExistPesel);
     //then
-    REQUIRE(db.getNumberOfStudents() == students.size()-1);
+    REQUIRE(db.getNumberOfStudents() == students.size() - 1);
 }

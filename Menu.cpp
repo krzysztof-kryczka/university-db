@@ -4,9 +4,10 @@ void Menu::showMenu() const {
     std::cout << "*************************************" << '\n';
     std::cout << "****** UNIVERSITY-DB DATABASE *******" << '\n';
     std::cout << "*************************************" << '\n';
-    int lp = 0;
+    int orderIndex = 0;
     for (const auto& option : options_) {
-        std::cout << lp++ << ".  " << option.optionDescription << '\n';
+        std::cout << orderIndex << ".  " << option.optionDescription << '\n';
+        ++orderIndex;
     }
 }
 
@@ -27,10 +28,9 @@ void Menu::run() {
         std::cin >> chosedOption;
         size_t indexOption = 0;
         try {
-            indexOption = std::stoi(chosedOption);
-        } catch (...) {
+            indexOption = std::stoi(chosedOption);  //todo: change to nothrowing function
+        } catch (std::invalid_argument& err) {
         }
-
         runOption(indexOption);
     }
 }
@@ -88,13 +88,14 @@ void Menu::addStudent() {
     std::cout << " Gender [Male][Female][Undefined] : ";
     std::cin >> genderInput;
 
-    std::vector sexes{Gender::Male, Gender::Female, Gender::Undefined};
-    for (const auto& sex : sexes) {
-        if (translateGender[sex] == genderInput) {
-            std::cout << " Gender selected: " << translateGender[sex] << '\n';
-            gender = sex;
-        }
+    auto it = std::find_if(begin(translateGender), end(translateGender), [&genderInput](const auto& pair) {
+        return pair.second == genderInput;
+    });
+    if (it != translateGender.end()){
+        gender = it->first;
     }
+    std::cout << "Gender set : " << translateGender[gender] << '\n';
+
     int incorrectPeselTries = 3;
     while (true) {
         std::cout << " Pesel: ";
@@ -105,8 +106,7 @@ void Menu::addStudent() {
             auto isSuccess = db_.addStudent(s);
             if (isSuccess) {
                 std::cout << "Student added.\n";
-            }
-            else {
+            } else {
                 std::cout << "Student NOT added.\n";
             }
             return;
