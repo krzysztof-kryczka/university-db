@@ -8,5 +8,9 @@ set (SRC
     Database.cpp
     Menu.cpp)
 
-add_executable(${PROJECT_NAME} main.cpp ${SRC})
-add_executable(${PROJECT_NAME}-ut Tests.cpp ${SRC})
+add_library(${PROJECT_NAME}-lib ${SRC})
+
+add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME}-ut Tests.cpp)
+target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib)
+target_link_libraries(${PROJECT_NAME}-ut ${PROJECT_NAME}-lib)
