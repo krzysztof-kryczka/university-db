@@ -8,7 +8,7 @@ set (SRC
     Database.cpp
     Menu.cpp)
 
-add_library(${PROJECT_NAME}-lib ${SRC})
+add_library(${PROJECT_NAME}-lib STATIC ${SRC})
 
 add_executable(${PROJECT_NAME} main.cpp)
 add_executable(${PROJECT_NAME}-ut Tests.cpp)
