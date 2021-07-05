@@ -117,18 +117,6 @@ std::vector<Student> Database::searchByCity(const std::string& city) const {
     return result;
 }
 
-void Database::sortByPesel() {
-    std::sort(begin(students_), end(students_), [](const auto& lhs, const auto& rhs) {
-        return std::less{}(lhs.getPesel(), rhs.getPesel());
-    });
-}
-
-void Database::sortBySurName() {
-    std::sort(begin(students_), end(students_), [](const auto& lhs, const auto& rhs) {
-        return std::less{}(lhs.getSurName(), rhs.getSurName());
-    });
-}
-
 void Database::deleteByPesel(std::string pesel) {
     auto it = std::remove_if(begin(students_), end(students_),
                              [pesel](const auto& student) { return student.getPesel() == pesel; });
