@@ -1,11 +1,12 @@
 #pragma once
 
-#include <iostream>
+#include "Address.hpp"
 #include "Person.hpp"
 
-class Student : public Person {
+class Worker : public Person {
 public:
-    Student(std::string firstName, std::string surName, std::string city, std::string street, std::string numberOfStreet, size_t indexNumber, std::string Pesel, Gender Gender);
+    Worker(std::string firstName, std::string surName, std::string city, std::string street, std::string numberOfStreet, size_t indexNumber, std::string pesel, Gender gender);
+    ~Worker() override = default;
 
     void setFirstName(const std::string& firstName) override;
     void setSurName(const std::string& surName) override;
@@ -15,6 +16,7 @@ public:
     void setIndexNumber(const size_t& indexNumber) override;
     void setPesel(const std::string& pesel) override;
     void setGender(const Gender& gender) override;
+    void setIncome(const size_t income) override { income_ = income; }
 
     std::string getFirstName() const override;
     std::string getSurName() const override;
@@ -24,16 +26,16 @@ public:
     Gender getGender() const override;
     std::string getCity() const override;
     std::string getStreet() const override;
+    std::optional<size_t> getIncome() const override { return income_; }
 
-    friend std::ostream& operator<<(std::ostream& os, const Student& student);
+    //friend std::ostream& operator<<(std::ostream& os, const Worker& worker);
 
 private:
     std::string firstName_{};
     std::string surName_{};
-    Address address_{};
-    size_t indexNumber_{};
     std::string pesel_{};
     Gender gender_ = Gender::Undefined;
+    Address address_{};
+    size_t income_{};
+    size_t indexNumber_{};
 };
-
-bool checkPesel(std::string pesel);

@@ -1,12 +1,13 @@
+#include "../Database.hpp"
 #include "Command.hpp"
 
-extern std::array<std::unique_ptr<Command>,13> options_;
+extern std::array<std::unique_ptr<Command>, 13> options_;
 extern Database db_;
 extern bool menuQuit;
 
-class PrintMenu: public Command{
+class PrintMenu : public Command {
 public:
-    void run() override{
+    void run() override {
         std::cout << "*************************************" << '\n';
         std::cout << "****** UNIVERSITY-DB DATABASE *******" << '\n';
         std::cout << "*************************************" << '\n';
@@ -17,38 +18,38 @@ public:
         }
     }
 
-    std::string getName(){
+    std::string getName() {
         return "Show Menu";
     }
 };
 
-class PrintAllRecords: public Command{
+class PrintAllRecords : public Command {
 public:
-    void run() override{
+    void run() override {
         std::cout << "---------PRINT RECORDS FROM FILE-----------\n";
         db_.printAll();
     }
 
-    std::string getName(){
+    std::string getName() {
         return "Print All Records";
     }
 };
 
-class LoadRecords: public Command{
+class LoadRecords : public Command {
 public:
-    void run() override{
+    void run() override {
         std::cout << "---------LOAD RECORD FROM FILE-----------\n";
         db_.loadFromFile("db.txt");
     }
 
-    std::string getName(){
+    std::string getName() {
         return "Load Records";
     }
 };
 
-class AddStudent: public Command{
+class AddStudent : public Command {
 public:
-    void run() override{
+    void run() override {
         std::string firstName;
         std::string surName;
         std::string city;
@@ -90,8 +91,8 @@ public:
             std::cin >> pesel;
 
             if (checkPesel(pesel)) {
-                Student s{firstName, surName, city, street, numberOfStreet, index, pesel, gender};
-                auto isSuccess = db_.addStudent(s);
+                PersonType student = std::make_unique<Student>(firstName, surName, city, street, numberOfStreet, index, pesel, gender);
+                auto isSuccess = db_.addPerson(student);
                 if (isSuccess) {
                     std::cout << "Student added.\n";
                 } else {
@@ -115,128 +116,128 @@ public:
         }
     }
 
-    std::string getName(){
+    std::string getName() {
         return "Add Student";
     }
 };
 
-class SortBySurname: public Command{
+class SortBySurname : public Command {
 public:
-    void run() override{
+    void run() override {
         std::cout << "---------SORT BY SURNAME (AFTER)-----------\n";
         db_.sortBySurName();
         db_.printAll();
     }
 
-    std::string getName(){
+    std::string getName() {
         return "Sort By Surname";
     }
 };
 
-class SortByPesel: public Command{
+class SortByPesel : public Command {
 public:
-    void run() override{
+    void run() override {
         std::cout << "---------SORT BY PESEL (AFTER)-----------\n";
         db_.sortByPesel();
         db_.printAll();
     }
 
-    std::string getName(){
+    std::string getName() {
         return "Sort By Pesel";
     }
 };
 
-class EndProgram: public Command{
+class EndProgram : public Command {
 public:
-    void run() override{
+    void run() override {
         menuQuit = true;
     }
 
-    std::string getName(){
+    std::string getName() {
         return "End Program";
     }
 };
 
-void printStudent(const Student& student){
+void printPerson(const PersonType& person) {
     std::cout << "*******************************************\n";
-    std::cout << "FirstName: " << student.getFirstName() << '\n';
-    std::cout << "SurName:   " << student.getSurName() << '\n';
-    std::cout << "Address:   " << student.getAddress() << '\n';
-    std::cout << "Index:     " << student.getIndexNumber() << '\n';
-    std::cout << "Pesel:     " << student.getPesel() << '\n';
+    std::cout << "FirstName: " << person->getFirstName() << '\n';
+    std::cout << "SurName:   " << person->getSurName() << '\n';
+    std::cout << "Address:   " << person->getAddress() << '\n';
+    std::cout << "Index:     " << person->getIndexNumber() << '\n';
+    std::cout << "Pesel:     " << person->getPesel() << '\n';
     std::cout << "*******************************************\n";
 }
 
-class SearchOption: public Command{
+class SearchOption : public Command {
 public:
-    void run() override{
-        std::vector<Student> result;
+    void run() override {
+        std::vector<PersonType> personsVec;
         std::string what;
         std::cout << "Enter the search type: firstname / surname / city / street" << what << ":";
         std::cin >> what;
 
         if (what == "surname") {
-            std::string sn;
+            std::string surName;
             std::cout << "enter the search " << what << ": ";
-            std::cin >> sn;
-            result = db_.searchBySurName(sn);
+            std::cin >> surName;
+            personsVec = db_.searchBySurName(surName);
         } else if (what == "firstname") {
-            std::string fn;
+            std::string firstName;
             std::cout << "enter the search " << what << ": ";
-            std::cin >> fn;
-            result = db_.searchByFirstName(fn);
+            std::cin >> firstName;
+            personsVec = db_.searchByFirstName(firstName);
         } else if (what == "city") {
-            std::string ct;
+            std::string city;
             std::cout << "enter the search " << what << ": ";
-            std::cin >> ct;
-            result = db_.searchByCity(ct);
+            std::cin >> city;
+            personsVec = db_.searchByCity(city);
         } else if (what == "street") {
-            std::string st;
+            std::string street;
             std::cout << "enter the search " << what << ": ";
-            std::cin >> st;
-            result = db_.searchByStreet(st);
+            std::cin >> street;
+            personsVec = db_.searchByStreet(street);
         } else {
             std::cout << "Error. Unknown option, please choose from : surname, firstname, city, street\n";
             return;
         }
-        if (!result.empty()) {
-            for (const auto& el : result) {
-                printStudent(el);
+        if (!personsVec.empty()) {
+            for (const auto& person : personsVec) {
+                printPerson(person);
             }
         } else {
             std::cout << "Not found Student with this " << what << '\n';
         }
     }
 
-    std::string getName(){
+    std::string getName() {
         return "Search";
     }
 };
 
-class SearchByPesel: public Command{
+class SearchByPesel : public Command {
 public:
-    void run() override{
+    void run() override {
         std::string p;
         std::cout << "enter the search pesel: ";
         std::cin >> p;
-        auto result = db_.searchByPesel(p);
-        if (!result.empty()) {
-            for (const auto& el : result) {
-                printStudent(el);
+        auto personsVec = db_.searchByPesel(p);
+        if (!personsVec.empty()) {
+            for (const auto& person : personsVec) {
+                printPerson(person);
             }
         } else {
             std::cout << "Not found Student with this pesel\n";
         }
     }
 
-    std::string getName(){
+    std::string getName() {
         return "Search By Pesel";
     }
 };
 
-class DeleteByPesel: public Command{
+class DeleteByPesel : public Command {
 public:
-    void run() override{
+    void run() override {
         std::string p;
         std::cout << "enter the pesel to be remove: ";
         std::cin >> p;
@@ -245,14 +246,14 @@ public:
         db_.printAll();
     }
 
-    std::string getName(){
+    std::string getName() {
         return "Delete By Pesel";
     }
 };
 
-class DeleteByIndexNumber: public Command{
+class DeleteByIndexNumber : public Command {
 public:
-    void run() override{
+    void run() override {
         size_t index;
         std::cout << "enter the index number to be remove: ";
         std::cin >> index;
@@ -261,14 +262,14 @@ public:
         db_.printAll();
     }
 
-    std::string getName(){
+    std::string getName() {
         return "Delete By Index";
     }
 };
 
-class ValidatePeselNumber: public Command{
+class ValidatePeselNumber : public Command {
 public:
-    void run() override{
+    void run() override {
         std::string p;
         std::cout << "enter the pesel to be check: ";
         std::cin >> p;
@@ -281,19 +282,19 @@ public:
         }
     }
 
-    std::string getName(){
+    std::string getName() {
         return "Validate PESEL";
     }
 };
 
-class SaveRecords: public Command{
+class SaveRecords : public Command {
 public:
-    void run() override{
+    void run() override {
         std::cout << "---------SAVE RECORD TO FILE-----------\n";
         db_.saveToFile("db.txt");
     }
 
-    std::string getName(){
+    std::string getName() {
         return "Save Records";
     }
 };

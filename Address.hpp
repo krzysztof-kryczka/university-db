@@ -2,13 +2,15 @@
 
 #include <string>
 
-constexpr auto defaultName = "UNDEFINED";
 struct Address {
-    std::string city_ = defaultName;
-    std::string street_ = defaultName;
-    std::string numberOfStreet_ = defaultName;
+    std::string city_{};
+    std::string street_{};
+    std::string numberOfStreet_{};
 
     std::string getAddress() const {
+        if(city_.empty() and street_.empty() and numberOfStreet_.empty()){
+            return {};
+        }
         return city_ + " " + street_ + " " + numberOfStreet_;
     }
 };

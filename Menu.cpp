@@ -1,5 +1,9 @@
 #include "Menu.hpp"
-#include "Commands\Commands.hpp"
+
+#include <array>
+#include <iostream>
+#include <memory>
+#include "Commands/Commands.hpp"
 
 Database db_;
 bool menuQuit = false;
