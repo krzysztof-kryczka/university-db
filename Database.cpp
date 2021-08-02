@@ -2,7 +2,12 @@
 #include <fstream>
 
 std::ostream& operator<<(std::ostream& os, const Student& student) {
-    os << student.getFirstName() << " " << student.getSurName() << " " << student.getAddress() << " " << student.getIndexNumber() << " " << student.getPesel() << " " << translateGender[student.getGender()] << '\n';
+    os  << student.getFirstName() 
+        << " " << student.getSurName() 
+        << " " << student.getAddress() 
+        << " " << student.getIndexNumber() 
+        << " " << student.getPesel() 
+        << " " << translateGender(student.getGender()) << '\n';
     return os;
 }
 
@@ -51,12 +56,20 @@ void Database::loadFromFile(std::string fileName) {
 
     std::string firstName, surName, city, street, numberOfStreet, pesel;
     size_t indexNumber;
-    Gender gender;
+    std::string gender_text;
 
     ifs.open(fileName);
     if (ifs.is_open()) {
-        while (ifs >> firstName >> surName >> city >> street >> numberOfStreet >> indexNumber >> pesel >> translateGender[gender]) {
-            Student s{firstName, surName, city, street, numberOfStreet, indexNumber, pesel, gender};
+        while (ifs  >> firstName 
+                    >> surName 
+                    >> city 
+                    >> street 
+                    >> numberOfStreet 
+                    >> indexNumber 
+                    >> pesel 
+                    >> gender_text) 
+        {
+            Student s{firstName, surName, city, street, numberOfStreet, indexNumber, pesel, textToGender(gender_text)};
             addStudent(s);
         }
     } else {

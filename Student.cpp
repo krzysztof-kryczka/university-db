@@ -1,10 +1,5 @@
 #include "Student.hpp"
 
-std::map<Gender, std::string> translateGender{
-    {Gender::Male, "Male"},
-    {Gender::Female, "Female"},
-    {Gender::Undefined, "Undefined"}};
-
 Student::Student(std::string firstName, std::string surName, std::string city, std::string street, std::string numberOfStreet, size_t indexNumber, std::string pesel, Gender gender)
     : firstName_(firstName), surName_(surName), address_{city, street, numberOfStreet}, indexNumber_(indexNumber), pesel_(pesel), gender_(gender) {}
 
