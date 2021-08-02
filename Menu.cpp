@@ -39,7 +39,7 @@ void Menu::run() {
         std::cin >> chosedOption;
         size_t indexOption = 0;
         try {
-            indexOption = std::stoi(chosedOption);  //todo: change to nothrowing function
+            indexOption = std::stoi(chosedOption);
         } catch (std::invalid_argument& err) {
             std::cout << "Wrong command!\n";
             continue;
