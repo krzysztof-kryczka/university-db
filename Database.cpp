@@ -175,6 +175,20 @@ void Database::sortBySurName(std::function<bool(const std::string&, const std::s
     });
 }
 
+void Database::sortByIncome(std::function<bool(const size_t&, const size_t&)> compare){
+    std::sort(begin(persons_), end(persons_), [&compare](const PersonType& lhs, const PersonType& rhs) {
+        if(auto lIncome = lhs->getIncome()){
+            if(auto rIncome = rhs->getIncome()){
+                return compare(lIncome.value(), rIncome.value());
+            }else{
+                return true;
+            }
+        }else{
+            return false;
+        }
+    });
+}
+
 void Database::deleteByPesel(const std::string& pesel) {
     auto it = std::remove_if(begin(persons_), end(persons_),
                              [&pesel](const auto& person) { return person->getPesel() == pesel; });

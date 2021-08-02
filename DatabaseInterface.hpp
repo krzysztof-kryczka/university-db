@@ -28,6 +28,7 @@ public:
 
     virtual void sortByPesel(std::function<bool(const std::string&, const std::string&)> compare) = 0;
     virtual void sortBySurName(std::function<bool(const std::string&, const std::string&)> compare) = 0;
+    virtual void sortByIncome(std::function<bool(const size_t&, const size_t&)> compare) = 0;
 
     virtual void deleteByPesel(const std::string& pesel) = 0;
     virtual void deleteByIndex(size_t indexNumber) = 0;

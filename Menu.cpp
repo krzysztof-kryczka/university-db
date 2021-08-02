@@ -7,7 +7,7 @@
 
 std::unique_ptr<DatabaseInterface> db_ = std::make_unique<Database>();
 bool menuQuit = false;
-std::array<std::unique_ptr<Command>, 13> options_{
+std::array<std::unique_ptr<Command>, 14> options_{
     std::make_unique<PrintMenu>(),
     std::make_unique<PrintAllRecords>(),
     std::make_unique<LoadRecords>(),
@@ -16,6 +16,7 @@ std::array<std::unique_ptr<Command>, 13> options_{
     std::make_unique<SearchByPesel>(),
     std::make_unique<SortBySurname>(),
     std::make_unique<SortByPesel>(),
+    std::make_unique<SortByIncome>(),
     std::make_unique<DeleteByPesel>(),
     std::make_unique<DeleteByIndexNumber>(),
     std::make_unique<ValidatePeselNumber>(),
