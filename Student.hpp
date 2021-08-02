@@ -1,27 +1,9 @@
 #pragma once
 
 #include <iostream>
-#include <map>
-#include <string>
+#include "Gender.hpp"
+#include "Address.hpp"
 
-enum class Gender {
-    Male,
-    Female,
-    Undefined
-};
-
-extern std::map<Gender, std::string> translateGender;
-
-constexpr auto defaultName = "UNDEFINED";
-struct Address {
-    std::string city_ = defaultName;
-    std::string street_ = defaultName;
-    std::string numberOfStreet_ = defaultName;
-
-    std::string getAddress() const {
-        return city_ + " " + street_ + " " + numberOfStreet_;
-    }
-};
 class Student {
 public:
     Student(std::string firstName, std::string surName, std::string city, std::string street, std::string numberOfStreet, size_t indexNumber, std::string Pesel, Gender Gender);

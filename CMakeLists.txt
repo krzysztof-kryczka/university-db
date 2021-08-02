@@ -6,7 +6,8 @@ set(CMAKE_CXX_STANDARD 17)
 set (SRC
     Student.cpp
     Database.cpp
-    Menu.cpp)
+    Menu.cpp
+    Gender.cpp)
 
 add_library(${PROJECT_NAME}-lib STATIC ${SRC})
 
