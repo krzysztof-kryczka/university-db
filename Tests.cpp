@@ -4,6 +4,7 @@
 #include <array>
 #include <vector>
 #include "Database.hpp"
+#include "CheckPesel.hpp"
 
 constexpr auto nonExistPesel = "90000000000";
 constexpr auto anotherExistPesel = "01234567890";
@@ -98,7 +99,7 @@ TEST_CASE("Sort database by surname in ascending order", "[Database][Sort][SurNa
     Database db{};
     fillDatabase(db);
     //when
-    db.sortBySurName();
+    db.sortBySurName(std::less<>{});
     //then
     const auto& students = db.getPersons();
     REQUIRE(students[0]->getSurName() == "Kowalski");
@@ -124,7 +125,7 @@ TEST_CASE("Sort database by PESEL in ascending order", "[Database][Sort][PESEL]"
     Database db{};
     fillDatabase(db);
     //when
-    db.sortByPesel();
+    db.sortByPesel(std::less<>{});
     //then
     const auto& students = db.getPersons();
     REQUIRE(students[0]->getPesel() == "00000000000");

@@ -35,5 +35,3 @@ private:
     std::string pesel_{};
     Gender gender_ = Gender::Undefined;
 };
-
-bool checkPesel(std::string pesel);

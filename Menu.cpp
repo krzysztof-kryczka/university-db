@@ -3,8 +3,9 @@
 #include <iostream>
 #include <memory>
 #include "Commands/Commands.hpp"
+#include "Database.hpp"
 
-Database db_;
+std::unique_ptr<DatabaseInterface> db_ = std::make_unique<Database>();
 bool menuQuit = false;
 std::array<std::unique_ptr<Command>, 13> options_{
     std::make_unique<PrintMenu>(),

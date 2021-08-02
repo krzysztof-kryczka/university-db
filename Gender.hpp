@@ -3,7 +3,7 @@
 #include <array>
 #include <string>
 
-enum class Gender:char{
+enum class Gender : char {
     Male,
     Female,
     Undefined

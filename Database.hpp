@@ -3,50 +3,38 @@
 #include <algorithm>
 #include <memory>
 #include <vector>
+#include "DatabaseInterface.hpp"
 #include "Student.hpp"
 #include "Worker.hpp"
 
-using PersonType = std::shared_ptr<Person>;
-
-class Database {
+class Database : public DatabaseInterface {
 public:
     Database() {}
-    ~Database() = default;
+    ~Database() override = default;
 
-    [[nodiscard]] bool addPerson(const PersonType& person);
-    void printById(size_t id) const;
-    void printAll() const;
-    void saveToFile(const std::string& fileName) const;
-    void loadFromFile(const std::string& fileName);
+    [[nodiscard]] bool addPerson(const PersonType& person) override;
+    void printById(size_t id) const override;
+    void printAll() const override;
+    void saveToFile(const std::string& fileName) const override;
+    void loadFromFile(const std::string& fileName) override;
 
-    [[nodiscard]] size_t getNumberOfStudents() const;
+    [[nodiscard]] std::vector<PersonType> searchByPesel(const std::string& pesel) const override;
+    [[nodiscard]] std::vector<PersonType> searchByFirstName(const std::string& firstName) const override;
+    [[nodiscard]] std::vector<PersonType> searchBySurName(const std::string& surName) const override;
+    [[nodiscard]] std::vector<PersonType> searchByStreet(const std::string& street) const override;
+    [[nodiscard]] std::vector<PersonType> searchByCity(const std::string& city) const override;
 
-    [[nodiscard]] std::vector<PersonType> searchByPesel(const std::string& pesel) const;
-    [[nodiscard]] std::vector<PersonType> searchByFirstName(const std::string& firstName) const;
-    [[nodiscard]] std::vector<PersonType> searchBySurName(const std::string& surName) const;
-    [[nodiscard]] std::vector<PersonType> searchByStreet(const std::string& street) const;
-    [[nodiscard]] std::vector<PersonType> searchByCity(const std::string& city) const;
+    void sortByPesel(std::function<bool(const std::string&, const std::string&)> compare) override;
+    void sortBySurName(std::function<bool(const std::string&, const std::string&)> compare) override;
 
-    template <typename C = std::less<>>
-    void sortByPesel(C compare = C{}) {
-        std::sort(begin(persons_), end(persons_), [&compare](const auto& lhs, const auto& rhs) {
-            return compare(lhs->getPesel(), rhs->getPesel());
-        });
-    }
+    void deleteByPesel(const std::string& pesel) override;
+    void deleteByIndex(size_t indexNumber) override;
+    void deleteByFirstName(const std::string& FirstName) override;
+    void deleteBySurName(const std::string& SurName) override;
 
-    template <typename C = std::less<>>
-    void sortBySurName(C compare = C{}) {
-        std::sort(begin(persons_), end(persons_), [&compare](const auto& lhs, const auto& rhs) {
-            return compare(lhs->getSurName(), rhs->getSurName());
-        });
-    }
+    size_t getNumberOfStudents() const override;
 
-    void deleteByPesel(const std::string& pesel);
-    void deleteByIndex(size_t indexNumber);
-    void deleteByFirstName(const std::string& FirstName);
-    void deleteBySurName(const std::string& SurName);
-
-    [[nodiscard]] const std::vector<PersonType>& getPersons() const;
+    [[nodiscard]] const std::vector<PersonType>& getPersons() const override;
 
 private:
     std::vector<PersonType> persons_{};
