@@ -26,6 +26,7 @@ public:
 
     void sortByPesel(std::function<bool(const std::string&, const std::string&)> compare) override;
     void sortBySurName(std::function<bool(const std::string&, const std::string&)> compare) override;
+    void sortByIncome(std::function<bool(const size_t&, const size_t&)> compare) override;
 
     void deleteByPesel(const std::string& pesel) override;
     void deleteByIndex(size_t indexNumber) override;

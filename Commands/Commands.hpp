@@ -1,10 +1,13 @@
+#include <iomanip>
+#include <map>
 #include "../CheckPesel.hpp"
 #include "../DatabaseInterface.hpp"
 #include "../Gender.hpp"
 #include "../Student.hpp"
 #include "Command.hpp"
 
-extern std::array<std::unique_ptr<Command>, 13> options_;
+extern std::vector<std::string> order_;
+extern std::map<std::string, std::shared_ptr<Command>> options_;
 extern std::unique_ptr<DatabaseInterface> db_;
 extern bool menuQuit;
 
@@ -14,10 +17,10 @@ public:
         std::cout << "*************************************" << '\n';
         std::cout << "****** UNIVERSITY-DB DATABASE *******" << '\n';
         std::cout << "*************************************" << '\n';
-        int orderIndex = 0;
-        for (const auto& option : options_) {
-            std::cout << orderIndex << ".  " << option->getName() << '\n';
-            ++orderIndex;
+        std::cout << "   COMMAND -> EFFECT\n";
+        std::cout << "-------------------------------------\n";
+        for (const auto& option : order_) {
+            std::cout << std::setw(10) << option << " -> " << options_[option]->getName() << '\n';
         }
     }
 
@@ -150,6 +153,19 @@ public:
     }
 };
 
+class SortByIncome : public Command {
+public:
+    void run() override {
+        std::cout << "---------SORT BY INCOME (AFTER)-----------\n";
+        db_->sortByIncome(std::less<>{});
+        db_->printAll();
+    }
+
+    std::string getName() {
+        return "Sort By Income";
+    }
+};
+
 class EndProgram : public Command {
 public:
     void run() override {
@@ -168,7 +184,7 @@ void printPerson(const PersonType& person) {
     std::cout << "Address:   " << person->getAddress() << '\n';
     std::cout << "Index:     " << person->getIndexNumber() << '\n';
     std::cout << "Pesel:     " << person->getPesel() << '\n';
-    if(auto income = person->getIncome()){
+    if (auto income = person->getIncome()) {
         std::cout << "Income:    " << income.value() << '\n';
     }
     std::cout << "*******************************************\n";

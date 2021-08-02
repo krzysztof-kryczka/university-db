@@ -7,43 +7,54 @@
 
 std::unique_ptr<DatabaseInterface> db_ = std::make_unique<Database>();
 bool menuQuit = false;
-std::array<std::unique_ptr<Command>, 13> options_{
-    std::make_unique<PrintMenu>(),
-    std::make_unique<PrintAllRecords>(),
-    std::make_unique<LoadRecords>(),
-    std::make_unique<AddStudent>(),
-    std::make_unique<SearchOption>(),
-    std::make_unique<SearchByPesel>(),
-    std::make_unique<SortBySurname>(),
-    std::make_unique<SortByPesel>(),
-    std::make_unique<DeleteByPesel>(),
-    std::make_unique<DeleteByIndexNumber>(),
-    std::make_unique<ValidatePeselNumber>(),
-    std::make_unique<SaveRecords>(),
-    std::make_unique<EndProgram>()};
+
+std::vector<std::string> order_{
+    "menu",
+    "show",
+    "load",
+    "save",
+    "search1",
+    "search2",
+    "sort1",
+    "sort2",
+    "sort3",
+    "del1",
+    "del2",
+    "vpesel",
+    "end"
+};
+
+std::map<std::string, std::shared_ptr<Command>> options_{
+    {"menu", std::make_shared<PrintMenu>()},
+    {"show", std::make_shared<PrintAllRecords>()},
+    {"load", std::make_shared<LoadRecords>()},
+    {"add", std::make_shared<AddStudent>()},
+    {"search1", std::make_shared<SearchOption>()},
+    {"search2", std::make_shared<SearchByPesel>()},
+    {"sort1", std::make_shared<SortBySurname>()},
+    {"sort2", std::make_shared<SortByPesel>()},
+    {"sort3", std::make_shared<SortByIncome>()},
+    {"del1", std::make_shared<DeleteByPesel>()},
+    {"del2", std::make_shared<DeleteByIndexNumber>()},
+    {"vpesel", std::make_shared<ValidatePeselNumber>()},
+    {"save", std::make_shared<SaveRecords>()},
+    {"end", std::make_shared<EndProgram>()}};
 
 void Menu::run() {
-    options_[0]->run();  //show menu
+    options_["menu"]->run();  //show menu
 
-    auto runOption = [this](size_t index) {
-        if (index >= 0 and index < options_.size()) {
-            options_[index]->run();
-        } else {
+    auto runOption = [this](const std::string& command) {
+        try {
+            options_.at(command)->run();
+        } catch (const std::out_of_range& err) {
             std::cout << "Wrong option!\n";
         }
     };
 
-    std::string chosedOption;
+    std::string command;
     while (!menuQuit) {
-        std::cout << "Select Option: ";
-        std::cin >> chosedOption;
-        size_t indexOption = 0;
-        try {
-            indexOption = std::stoi(chosedOption);
-        } catch (std::invalid_argument& err) {
-            std::cout << "Wrong command!\n";
-            continue;
-        }
-        runOption(indexOption);
+        std::cout << "Write command: ";
+        std::cin >> command;
+        runOption(command);
     }
 }
