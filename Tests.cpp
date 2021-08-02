@@ -23,18 +23,21 @@ constexpr auto otherStudentSurName = "Bono";
 constexpr std::array studentSurName = {
     onceExistSurName, twiceExistSurName, twiceExistSurName};
 
-Student otherStudent(otherStudentName, otherStudentSurName, "A", "A", "A", 0, nonExistPesel, Gender::Undefined);
+PersonType otherStudent = std::make_shared<Student>(otherStudentName, otherStudentSurName, "A", "A", "A", 0, nonExistPesel, Gender::Undefined);
 
-const std::vector students = {
-    Student(studentName[0], studentSurName[0], "A", "A", "A", 0, anotherExistPesel, Gender::Undefined),
-    Student(studentName[1], studentSurName[1], "A", "A", "A", 1, onceExistPesel, Gender::Undefined),
-    Student(studentName[2], studentSurName[2], "A", "A", "A", 2, secondExistPesel, Gender::Undefined)};
+const std::vector<PersonType> students = {
+    std::make_shared<Student>(studentName[0], studentSurName[0], "A", "A", "A", 0, anotherExistPesel, Gender::Undefined),
+    std::make_shared<Student>(studentName[1], studentSurName[1], "A", "A", "A", 1, onceExistPesel, Gender::Undefined),
+    std::make_shared<Student>(studentName[2], studentSurName[2], "A", "A", "A", 2, secondExistPesel, Gender::Undefined)};
 
 constexpr auto baseStudentsSize = 3;
 
-void fillDatabase(Database& db){
+void fillDatabase(Database& db) {
     for (const auto& student : students) {
-        db.addStudent(student);
+        auto result = db.addPerson(student);
+        if (!result) {
+            std::cout << "fillDatabase fail\n";
+        }
     }
 }
 
@@ -60,7 +63,7 @@ TEST_CASE("Add Student to empty database", "[Database][Add]") {
     //given
     Database db{};
     //when
-    auto isSuccess = db.addStudent(students[0]);
+    auto isSuccess = db.addPerson(students[0]);
     //then
     REQUIRE(isSuccess);
     REQUIRE(db.getNumberOfStudents() == 1);
@@ -72,7 +75,7 @@ TEST_CASE("Add new Student to existing database", "[Database][Add]") {
     fillDatabase(db);
     auto sizeBefore = db.getNumberOfStudents();
     //when
-    auto isSuccess = db.addStudent(otherStudent);
+    auto isSuccess = db.addPerson(otherStudent);
     //then
     REQUIRE(isSuccess);
     REQUIRE(db.getNumberOfStudents() == sizeBefore + 1);
@@ -84,62 +87,62 @@ TEST_CASE("Skipp adding existing student in database", "[Database][Add]") {
     fillDatabase(db);
     auto sizeBefore = db.getNumberOfStudents();
     //when
-    auto isSuccess = db.addStudent(students[0]);
+    auto isSuccess = db.addPerson(students[0]);
     //then
     REQUIRE(!isSuccess);
     REQUIRE(db.getNumberOfStudents() == sizeBefore);
 }
 
-TEST_CASE("Sort database by surname in ascending order","[Database][Sort][SurName]"){
+TEST_CASE("Sort database by surname in ascending order", "[Database][Sort][SurName]") {
     //given
     Database db{};
     fillDatabase(db);
     //when
     db.sortBySurName();
     //then
-    const auto& students = db.getStudents();
-    REQUIRE(students[0].getSurName() == "Kowalski");
-    REQUIRE(students[1].getSurName() == "Kowalski");
-    REQUIRE(students[2].getSurName() == "Nowak");
+    const auto& students = db.getPersons();
+    REQUIRE(students[0]->getSurName() == "Kowalski");
+    REQUIRE(students[1]->getSurName() == "Kowalski");
+    REQUIRE(students[2]->getSurName() == "Nowak");
 }
 
-TEST_CASE("Sort database by surname in descending order","[Database][Sort][SurName]"){
+TEST_CASE("Sort database by surname in descending order", "[Database][Sort][SurName]") {
     //given
     Database db{};
     fillDatabase(db);
     //when
     db.sortBySurName(std::greater{});
     //then
-    const auto& students = db.getStudents();
-    REQUIRE(students[0].getSurName() == "Nowak");
-    REQUIRE(students[1].getSurName() == "Kowalski");
-    REQUIRE(students[2].getSurName() == "Kowalski");
+    const auto& students = db.getPersons();
+    REQUIRE(students[0]->getSurName() == "Nowak");
+    REQUIRE(students[1]->getSurName() == "Kowalski");
+    REQUIRE(students[2]->getSurName() == "Kowalski");
 }
 
-TEST_CASE("Sort database by PESEL in ascending order","[Database][Sort][PESEL]"){
+TEST_CASE("Sort database by PESEL in ascending order", "[Database][Sort][PESEL]") {
     //given
     Database db{};
     fillDatabase(db);
     //when
     db.sortByPesel();
     //then
-    const auto& students = db.getStudents();
-    REQUIRE(students[0].getPesel() == "00000000000");
-    REQUIRE(students[1].getPesel() == "01234567890");
-    REQUIRE(students[2].getPesel() == "11111111111");
+    const auto& students = db.getPersons();
+    REQUIRE(students[0]->getPesel() == "00000000000");
+    REQUIRE(students[1]->getPesel() == "01234567890");
+    REQUIRE(students[2]->getPesel() == "11111111111");
 }
 
-TEST_CASE("Sort database by PESEL in descending order","[Database][Sort][PESEL]"){
+TEST_CASE("Sort database by PESEL in descending order", "[Database][Sort][PESEL]") {
     //given
     Database db{};
     fillDatabase(db);
     //when
     db.sortByPesel(std::greater{});
     //then
-    const auto& students = db.getStudents();
-    REQUIRE(students[0].getPesel() == "11111111111");
-    REQUIRE(students[1].getPesel() == "01234567890");
-    REQUIRE(students[2].getPesel() == "00000000000");
+    const auto& students = db.getPersons();
+    REQUIRE(students[0]->getPesel() == "11111111111");
+    REQUIRE(students[1]->getPesel() == "01234567890");
+    REQUIRE(students[2]->getPesel() == "00000000000");
 }
 
 TEST_CASE("Search by SurName in empty database", "[Database][Search][SurName]") {
@@ -213,7 +216,7 @@ TEST_CASE("Search by PESEL what exist once", "[Database][Search][PESEL]") {
     //then
     REQUIRE(!result.empty());
     REQUIRE(result.size() == 1);
-    REQUIRE(result[0].getFirstName() == studentName[1]);
+    REQUIRE(result[0]->getFirstName() == studentName[1]);
 }
 
 TEST_CASE("Search by PESEL student added exist twice", "[Database][Search][PESEL]") {
@@ -226,7 +229,7 @@ TEST_CASE("Search by PESEL student added exist twice", "[Database][Search][PESEL
     //then
     REQUIRE(!result.empty());
     REQUIRE(result.size() == 1);
-    REQUIRE(result[0].getFirstName() == studentName[2]);
+    REQUIRE(result[0]->getFirstName() == studentName[2]);
 }
 
 TEST_CASE("Delete by PESEL in empty database", "[Database][Delete][PESEL]") {

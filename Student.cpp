@@ -35,19 +35,19 @@ void Student::setIndexNumber(const size_t& indexNumber) {
     indexNumber_ = indexNumber;
 }
 
-std::string Student::getFirstName() const {
+const std::string& Student::getFirstName() const {
     return firstName_;
 }
 
-std::string Student::getSurName() const {
+const std::string& Student::getSurName() const {
     return surName_;
 }
 
-std::string Student::getAddress() const {
-    return address_.getAddress();
+const std::string Student::getAddress() const {
+    return address_.city_ + " " + address_.street_ + " " + address_.numberOfStreet_;;
 }
 
-std::string Student::getPesel() const {
+const std::string& Student::getPesel() const {
     return pesel_;
 }
 
@@ -59,11 +59,11 @@ Gender Student::getGender() const {
     return gender_;
 }
 
-std::string Student::getCity() const {
+const std::string& Student::getCity() const {
     return address_.city_;
 }
 
-std::string Student::getStreet() const {
+const std::string& Student::getStreet() const {
     return address_.street_;
 }
 

@@ -1,8 +1,7 @@
 #pragma once
 
 #include <string>
-
-class Command{
+class Command {
 public:
     Command() = default;
     virtual ~Command() = default;

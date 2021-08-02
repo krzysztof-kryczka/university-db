@@ -2,56 +2,69 @@
 #include <fstream>
 
 std::ostream& operator<<(std::ostream& os, const Student& student) {
-    os  << student.getFirstName() 
-        << " " << student.getSurName() 
-        << " " << student.getAddress() 
-        << " " << student.getIndexNumber() 
-        << " " << student.getPesel() 
-        << " " << translateGender(student.getGender()) << '\n';
+    os << student.getFirstName()
+       << " " << student.getSurName()
+       << " " << student.getAddress()
+       << " " << student.getIndexNumber()
+       << " " << student.getPesel()
+       << " " << translateGender(student.getGender()) << '\n';
     return os;
 }
 
-bool Database::addStudent(Student student) {
-    auto exist = std::any_of(begin(students_), end(students_), [&student](const auto& other) {
-        return student.getPesel() == other.getPesel();
+std::ostream& operator<<(std::ostream& os, const Person& person) {
+    os << person.getFirstName()
+       << " " << person.getSurName()
+       << " " << person.getAddress()
+       << " " << person.getIndexNumber()
+       << " " << person.getPesel()
+       << " " << translateGender(person.getGender()) << '\n';
+    if (auto income = person.getIncome()) {
+        os << "Income: " << income.value() << '\n';
+    }
+    return os;
+}
+
+bool Database::addPerson(const PersonType& person) {
+    auto exist = std::any_of(begin(persons_), end(persons_), [&person](const auto& other) {
+        return person->getPesel() == other->getPesel();
     });
 
     if (exist) {
-        std::cout << "Student already exist. Adding abort.\n";
+        std::cout << "Person already exist. Adding abort.\n";
         return false;
     }
-    students_.push_back(student);
+    persons_.push_back(person);
     return true;
 }
 
-void Database::printById(const size_t& id) const {}
+void Database::printById(size_t id) const {}
 
 void Database::printAll() const {
     std::cout << "\t Database: \n";
-    if (students_.empty()) {
+    if (persons_.empty()) {
         std::cout << "Error! Empty Database!\n";
         return;
     }
-    for (const auto& student : students_) {
-        std::cout << student;
+    for (const auto& student : persons_) {
+        std::cout << *student;
     }
     std::cout << "\n";
 }
 
-void Database::saveToFile(std::string fileName) const {
+void Database::saveToFile(const std::string& fileName) const {
     std::ofstream ofs;
     ofs.open(fileName);
 
     if (ofs.is_open()) {
-        for (const auto& student : students_) {
-            ofs << student;
+        for (const auto& student : persons_) {
+            ofs << *student;
         }
     } else {
         std::cout << "Error! Could not open " << fileName << " !\n";
     }
 }
-void Database::loadFromFile(std::string fileName) {
-    students_.clear();
+void Database::loadFromFile(const std::string& fileName) {
+    persons_.clear();
     std::ifstream ifs;
 
     std::string firstName, surName, city, street, numberOfStreet, pesel;
@@ -60,17 +73,12 @@ void Database::loadFromFile(std::string fileName) {
 
     ifs.open(fileName);
     if (ifs.is_open()) {
-        while (ifs  >> firstName 
-                    >> surName 
-                    >> city 
-                    >> street 
-                    >> numberOfStreet 
-                    >> indexNumber 
-                    >> pesel 
-                    >> gender_text) 
-        {
-            Student s{firstName, surName, city, street, numberOfStreet, indexNumber, pesel, textToGender(gender_text)};
-            addStudent(s);
+        while (ifs >> firstName >> surName >> city >> street >> numberOfStreet >> indexNumber >> pesel >> gender_text) {
+            PersonType student = std::make_shared<Student>(firstName, surName, city, street, numberOfStreet, indexNumber, pesel, textToGender(gender_text));
+            auto result = addPerson(student);
+            if (!result) {
+                std::cout << "Add person to database from file failed.";
+            }
         }
     } else {
         std::cout << "Error. Invalid data";
@@ -78,76 +86,80 @@ void Database::loadFromFile(std::string fileName) {
 }
 
 size_t Database::getNumberOfStudents() const {
-    return students_.size();
+    return persons_.size();
 }
 
-std::vector<Student> Database::searchByPesel(const std::string& pesel) const {
-    std::vector<Student> result;
-    for (const auto& el : students_) {
-        if (el.getPesel() == pesel) {
-            result.push_back(el);
+std::vector<PersonType> Database::searchByPesel(const std::string& pesel) const {
+    std::vector<PersonType> result;
+    for (const auto& person : persons_) {
+        if (person->getPesel() == pesel) {
+            result.push_back(person);
         }
     }
     return result;
 }
 
-std::vector<Student> Database::searchByFirstName(const std::string& firstName) const {
-    std::vector<Student> result;
-    for (const auto& el : students_) {
-        if (el.getFirstName() == firstName) {
-            result.push_back(el);
+std::vector<PersonType> Database::searchByFirstName(const std::string& firstName) const {
+    std::vector<PersonType> result;
+    for (const auto& person : persons_) {
+        if (person->getFirstName() == firstName) {
+            result.push_back(person);
         }
     }
     return result;
 }
 
-std::vector<Student> Database::searchBySurName(const std::string& surName) const {
-    std::vector<Student> result;
-    for (const auto& el : students_) {
-        if (el.getSurName() == surName) {
-            result.push_back(el);
+std::vector<PersonType> Database::searchBySurName(const std::string& surName) const {
+    std::vector<PersonType> result;
+    for (const auto& person : persons_) {
+        if (person->getSurName() == surName) {
+            result.push_back(person);
         }
     }
     return result;
 }
-std::vector<Student> Database::searchByStreet(const std::string& street) const {
-    std::vector<Student> result;
-    for (const auto& el : students_) {
-        if (el.getStreet() == street) {
-            result.push_back(el);
-        }
-    }
-    return result;
-}
-
-std::vector<Student> Database::searchByCity(const std::string& city) const {
-    std::vector<Student> result;
-    for (const auto& el : students_) {
-        if (el.getCity() == city) {
-            result.push_back(el);
+std::vector<PersonType> Database::searchByStreet(const std::string& street) const {
+    std::vector<PersonType> result;
+    for (const auto& person : persons_) {
+        if (person->getStreet() == street) {
+            result.push_back(person);
         }
     }
     return result;
 }
 
-void Database::deleteByPesel(std::string pesel) {
-    auto it = std::remove_if(begin(students_), end(students_),
-                             [pesel](const auto& student) { return student.getPesel() == pesel; });
-    students_.erase(it, students_.end());
+std::vector<PersonType> Database::searchByCity(const std::string& city) const {
+    std::vector<PersonType> result;
+    for (const auto& person : persons_) {
+        if (person->getCity() == city) {
+            result.push_back(person);
+        }
+    }
+    return result;
+}
+
+void Database::deleteByPesel(const std::string& pesel) {
+    auto it = std::remove_if(begin(persons_), end(persons_),
+                             [&pesel](const auto& person) { return person->getPesel() == pesel; });
+    persons_.erase(it, persons_.end());
 }
 
 void Database::deleteByIndex(size_t indexNumber) {
-    auto it = std::remove_if(begin(students_), end(students_),
-                             [indexNumber](const auto& student) { return student.getIndexNumber() == indexNumber; });
-    students_.erase(it, students_.end());
+    auto it = std::remove_if(begin(persons_), end(persons_),
+                             [indexNumber](const auto& person) { return person->getIndexNumber() == indexNumber; });
+    persons_.erase(it, persons_.end());
 }
-void Database::deleteByFirstName(std::string FirstName) {
-    auto it = std::remove_if(begin(students_), end(students_),
-                             [FirstName](const auto& student) { return student.getFirstName() == FirstName; });
-    students_.erase(it, students_.end());
+void Database::deleteByFirstName(const std::string& firstName) {
+    auto it = std::remove_if(begin(persons_), end(persons_),
+                             [&firstName](const auto& person) { return person->getFirstName() == firstName; });
+    persons_.erase(it, persons_.end());
 }
-void Database::deleteBySurName(std::string SurName) {
-    auto it = std::remove_if(begin(students_), end(students_),
-                             [SurName](const auto& student) { return student.getSurName() == SurName; });
-    students_.erase(it, students_.end());
+void Database::deleteBySurName(const std::string& surName) {
+    auto it = std::remove_if(begin(persons_), end(persons_),
+                             [&surName](const auto& person) { return person->getSurName() == surName; });
+    persons_.erase(it, persons_.end());
+}
+
+const std::vector<PersonType>& Database::getPersons() const {
+    return persons_;
 }

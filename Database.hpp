@@ -1,50 +1,53 @@
 #pragma once
 
 #include <algorithm>
+#include <memory>
 #include <vector>
 #include "Student.hpp"
+#include "Worker.hpp"
+
+using PersonType = std::shared_ptr<Person>;
 
 class Database {
 public:
     Database() {}
+    ~Database() = default;
 
-    bool addStudent(Student student);
-    void printById(const size_t& id) const;
+    [[nodiscard]] bool addPerson(const PersonType& person);
+    void printById(size_t id) const;
     void printAll() const;
-    void saveToFile(std::string fileName) const;
-    void loadFromFile(std::string fileName);
+    void saveToFile(const std::string& fileName) const;
+    void loadFromFile(const std::string& fileName);
 
-    size_t getNumberOfStudents() const;
+    [[nodiscard]] size_t getNumberOfStudents() const;
 
-    std::vector<Student> searchByPesel(const std::string& pesel) const;
-    std::vector<Student> searchByFirstName(const std::string& firstName) const;
-    std::vector<Student> searchBySurName(const std::string& surName) const;
-    std::vector<Student> searchByStreet(const std::string& street) const;
-    std::vector<Student> searchByCity(const std::string& city) const;
+    [[nodiscard]] std::vector<PersonType> searchByPesel(const std::string& pesel) const;
+    [[nodiscard]] std::vector<PersonType> searchByFirstName(const std::string& firstName) const;
+    [[nodiscard]] std::vector<PersonType> searchBySurName(const std::string& surName) const;
+    [[nodiscard]] std::vector<PersonType> searchByStreet(const std::string& street) const;
+    [[nodiscard]] std::vector<PersonType> searchByCity(const std::string& city) const;
 
     template <typename C = std::less<>>
     void sortByPesel(C compare = C{}) {
-        std::sort(begin(students_), end(students_), [&compare](const auto& lhs, const auto& rhs) {
-            return compare(lhs.getPesel(), rhs.getPesel());
+        std::sort(begin(persons_), end(persons_), [&compare](const auto& lhs, const auto& rhs) {
+            return compare(lhs->getPesel(), rhs->getPesel());
         });
     }
 
     template <typename C = std::less<>>
     void sortBySurName(C compare = C{}) {
-        std::sort(begin(students_), end(students_), [&compare](const auto& lhs, const auto& rhs) {
-            return compare(lhs.getSurName(), rhs.getSurName());
+        std::sort(begin(persons_), end(persons_), [&compare](const auto& lhs, const auto& rhs) {
+            return compare(lhs->getSurName(), rhs->getSurName());
         });
     }
 
-    void deleteByPesel(std::string pesel);
+    void deleteByPesel(const std::string& pesel);
     void deleteByIndex(size_t indexNumber);
-    void deleteByFirstName(std::string FirstName);
-    void deleteBySurName(std::string SurName);
+    void deleteByFirstName(const std::string& FirstName);
+    void deleteBySurName(const std::string& SurName);
 
-    const std::vector<Student>& getStudents() const{
-        return students_;
-    }
+    [[nodiscard]] const std::vector<PersonType>& getPersons() const;
 
 private:
-    std::vector<Student> students_;
+    std::vector<PersonType> persons_{};
 };
