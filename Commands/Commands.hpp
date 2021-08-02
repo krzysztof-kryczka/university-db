@@ -91,7 +91,7 @@ public:
             std::cin >> pesel;
 
             if (checkPesel(pesel)) {
-                PersonType student = std::make_unique<Student>(firstName, surName, city, street, numberOfStreet, index, pesel, gender);
+                PersonType student = std::make_shared<Student>(firstName, surName, city, street, numberOfStreet, index, pesel, gender);
                 auto isSuccess = db_.addPerson(student);
                 if (isSuccess) {
                     std::cout << "Student added.\n";
