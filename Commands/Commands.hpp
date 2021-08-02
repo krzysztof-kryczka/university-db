@@ -1,10 +1,13 @@
+#include <iomanip>
+#include <map>
 #include "../CheckPesel.hpp"
 #include "../DatabaseInterface.hpp"
 #include "../Gender.hpp"
 #include "../Student.hpp"
 #include "Command.hpp"
 
-extern std::array<std::unique_ptr<Command>, 14> options_;
+extern std::vector<std::string> order_;
+extern std::map<std::string, std::shared_ptr<Command>> options_;
 extern std::unique_ptr<DatabaseInterface> db_;
 extern bool menuQuit;
 
@@ -14,10 +17,10 @@ public:
         std::cout << "*************************************" << '\n';
         std::cout << "****** UNIVERSITY-DB DATABASE *******" << '\n';
         std::cout << "*************************************" << '\n';
-        int orderIndex = 0;
-        for (const auto& option : options_) {
-            std::cout << orderIndex << ".  " << option->getName() << '\n';
-            ++orderIndex;
+        std::cout << "   COMMAND -> EFFECT\n";
+        std::cout << "-------------------------------------\n";
+        for (const auto& option : order_) {
+            std::cout << std::setw(10) << option << " -> " << options_[option]->getName() << '\n';
         }
     }
 
