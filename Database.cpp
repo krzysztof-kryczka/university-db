@@ -37,7 +37,7 @@ bool Database::addPerson(const PersonType& person) {
     return true;
 }
 
-void Database::printById(const size_t& id) const {}
+void Database::printById(size_t id) const {}
 
 void Database::printAll() const {
     std::cout << "\t Database: \n";
@@ -51,7 +51,7 @@ void Database::printAll() const {
     std::cout << "\n";
 }
 
-void Database::saveToFile(std::string fileName) const {
+void Database::saveToFile(const std::string& fileName) const {
     std::ofstream ofs;
     ofs.open(fileName);
 
@@ -63,7 +63,7 @@ void Database::saveToFile(std::string fileName) const {
         std::cout << "Error! Could not open " << fileName << " !\n";
     }
 }
-void Database::loadFromFile(std::string fileName) {
+void Database::loadFromFile(const std::string& fileName) {
     persons_.clear();
     std::ifstream ifs;
 
@@ -138,9 +138,9 @@ std::vector<PersonType> Database::searchByCity(const std::string& city) const {
     return result;
 }
 
-void Database::deleteByPesel(std::string pesel) {
+void Database::deleteByPesel(const std::string& pesel) {
     auto it = std::remove_if(begin(persons_), end(persons_),
-                             [pesel](const auto& person) { return person->getPesel() == pesel; });
+                             [&pesel](const auto& person) { return person->getPesel() == pesel; });
     persons_.erase(it, persons_.end());
 }
 
@@ -149,13 +149,17 @@ void Database::deleteByIndex(size_t indexNumber) {
                              [indexNumber](const auto& person) { return person->getIndexNumber() == indexNumber; });
     persons_.erase(it, persons_.end());
 }
-void Database::deleteByFirstName(std::string FirstName) {
+void Database::deleteByFirstName(const std::string& firstName) {
     auto it = std::remove_if(begin(persons_), end(persons_),
-                             [FirstName](const auto& person) { return person->getFirstName() == FirstName; });
+                             [&firstName](const auto& person) { return person->getFirstName() == firstName; });
     persons_.erase(it, persons_.end());
 }
-void Database::deleteBySurName(std::string SurName) {
+void Database::deleteBySurName(const std::string& surName) {
     auto it = std::remove_if(begin(persons_), end(persons_),
-                             [SurName](const auto& person) { return person->getSurName() == SurName; });
+                             [&surName](const auto& person) { return person->getSurName() == surName; });
     persons_.erase(it, persons_.end());
+}
+
+const std::vector<PersonType>& Database::getPersons() const {
+    return persons_;
 }

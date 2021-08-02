@@ -18,14 +18,14 @@ public:
     void setGender(const Gender& gender) override;
     void setIncome(const size_t income) override { income_ = income; }
 
-    std::string getFirstName() const override;
-    std::string getSurName() const override;
-    std::string getAddress() const override;
+    const std::string& getFirstName() const override;
+    const std::string& getSurName() const override;
+    const std::string getAddress() const override;
     size_t getIndexNumber() const override;
-    std::string getPesel() const override;
+    const std::string& getPesel() const override;
     Gender getGender() const override;
-    std::string getCity() const override;
-    std::string getStreet() const override;
+    const std::string& getCity() const override;
+    const std::string& getStreet() const override;
     std::optional<size_t> getIncome() const override { return income_; }
 
     //friend std::ostream& operator<<(std::ostream& os, const Worker& worker);

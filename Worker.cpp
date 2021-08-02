@@ -35,19 +35,19 @@ void Worker::setIndexNumber(const size_t& indexNumber) {
     indexNumber_ = indexNumber;
 }
 
-std::string Worker::getFirstName() const {
+const std::string& Worker::getFirstName() const {
     return firstName_;
 }
 
-std::string Worker::getSurName() const {
+const std::string& Worker::getSurName() const {
     return surName_;
 }
 
-std::string Worker::getAddress() const {
-    return address_.getAddress();
+const std::string Worker::getAddress() const {
+    return address_.city_ + " " + address_.street_ + " " + address_.numberOfStreet_;
 }
 
-std::string Worker::getPesel() const {
+const std::string& Worker::getPesel() const {
     return pesel_;
 }
 
@@ -59,10 +59,10 @@ Gender Worker::getGender() const {
     return gender_;
 }
 
-std::string Worker::getCity() const {
+const std::string& Worker::getCity() const {
     return address_.city_;
 }
 
-std::string Worker::getStreet() const {
+const std::string& Worker::getStreet() const {
     return address_.street_;
 }

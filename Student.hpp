@@ -16,14 +16,14 @@ public:
     void setPesel(const std::string& pesel) override;
     void setGender(const Gender& gender) override;
 
-    std::string getFirstName() const override;
-    std::string getSurName() const override;
-    std::string getAddress() const override;
-    size_t getIndexNumber() const override;
-    std::string getPesel() const override;
-    Gender getGender() const override;
-    std::string getCity() const override;
-    std::string getStreet() const override;
+    [[nodiscard]] const std::string& getFirstName() const override;
+    [[nodiscard]] const std::string& getSurName() const override;
+    [[nodiscard]] const std::string getAddress() const override;
+    [[nodiscard]] size_t getIndexNumber() const override;
+    [[nodiscard]] const std::string& getPesel() const override;
+    [[nodiscard]] Gender getGender() const override;
+    [[nodiscard]] const std::string& getCity() const override;
+    [[nodiscard]] const std::string& getStreet() const override;
 
     friend std::ostream& operator<<(std::ostream& os, const Student& student);
 

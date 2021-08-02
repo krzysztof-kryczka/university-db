@@ -14,18 +14,18 @@ public:
     ~Database() = default;
 
     [[nodiscard]] bool addPerson(const PersonType& person);
-    void printById(const size_t& id) const;
+    void printById(size_t id) const;
     void printAll() const;
-    void saveToFile(std::string fileName) const;
-    void loadFromFile(std::string fileName);
+    void saveToFile(const std::string& fileName) const;
+    void loadFromFile(const std::string& fileName);
 
-    size_t getNumberOfStudents() const;
+    [[nodiscard]] size_t getNumberOfStudents() const;
 
-    std::vector<PersonType> searchByPesel(const std::string& pesel) const;
-    std::vector<PersonType> searchByFirstName(const std::string& firstName) const;
-    std::vector<PersonType> searchBySurName(const std::string& surName) const;
-    std::vector<PersonType> searchByStreet(const std::string& street) const;
-    std::vector<PersonType> searchByCity(const std::string& city) const;
+    [[nodiscard]] std::vector<PersonType> searchByPesel(const std::string& pesel) const;
+    [[nodiscard]] std::vector<PersonType> searchByFirstName(const std::string& firstName) const;
+    [[nodiscard]] std::vector<PersonType> searchBySurName(const std::string& surName) const;
+    [[nodiscard]] std::vector<PersonType> searchByStreet(const std::string& street) const;
+    [[nodiscard]] std::vector<PersonType> searchByCity(const std::string& city) const;
 
     template <typename C = std::less<>>
     void sortByPesel(C compare = C{}) {
@@ -41,14 +41,12 @@ public:
         });
     }
 
-    void deleteByPesel(std::string pesel);
+    void deleteByPesel(const std::string& pesel);
     void deleteByIndex(size_t indexNumber);
-    void deleteByFirstName(std::string FirstName);
-    void deleteBySurName(std::string SurName);
+    void deleteByFirstName(const std::string& FirstName);
+    void deleteBySurName(const std::string& SurName);
 
-    const std::vector<PersonType>& getPersons() const {
-        return persons_;
-    }
+    [[nodiscard]] const std::vector<PersonType>& getPersons() const;
 
 private:
     std::vector<PersonType> persons_{};
