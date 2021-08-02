@@ -5,7 +5,7 @@
 
 class Worker : public Person {
 public:
-    Worker(std::string firstName, std::string surName, std::string city, std::string street, std::string numberOfStreet, size_t indexNumber, std::string pesel, Gender gender);
+    Worker(std::string firstName, std::string surName, std::string city, std::string street, std::string numberOfStreet, size_t indexNumber, std::string pesel, Gender gender, size_t income);
     ~Worker() override = default;
 
     void setFirstName(const std::string& firstName) override;
@@ -28,14 +28,12 @@ public:
     const std::string& getStreet() const override;
     std::optional<size_t> getIncome() const override { return income_; }
 
-    //friend std::ostream& operator<<(std::ostream& os, const Worker& worker);
-
 private:
-    std::string firstName_{};
-    std::string surName_{};
-    std::string pesel_{};
+    std::string firstName_;
+    std::string surName_;
+    std::string pesel_;
     Gender gender_ = Gender::Undefined;
-    Address address_{};
+    Address address_;
     size_t income_{};
     size_t indexNumber_{};
 };

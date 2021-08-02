@@ -168,6 +168,9 @@ void printPerson(const PersonType& person) {
     std::cout << "Address:   " << person->getAddress() << '\n';
     std::cout << "Index:     " << person->getIndexNumber() << '\n';
     std::cout << "Pesel:     " << person->getPesel() << '\n';
+    if(auto income = person->getIncome()){
+        std::cout << "Income:    " << income.value() << '\n';
+    }
     std::cout << "*******************************************\n";
 }
 

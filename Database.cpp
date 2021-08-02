@@ -2,26 +2,55 @@
 #include <fstream>
 
 std::ostream& operator<<(std::ostream& os, const Student& student) {
-    os << student.getFirstName()
-       << " " << student.getSurName()
-       << " " << student.getAddress()
-       << " " << student.getIndexNumber()
-       << " " << student.getPesel()
-       << " " << translateGender(student.getGender()) << '\n';
+    os << "STUDENT"
+       << ' ' << student.getFirstName()
+       << ' ' << student.getSurName()
+       << ' ' << student.getAddress()
+       << ' ' << student.getIndexNumber()
+       << ' ' << student.getPesel()
+       << ' ' << translateGender(student.getGender()) << '\n';
+    return os;
+}
+
+std::ostream& operator<<(std::ostream& os, const Worker& worker) {
+    os << "WORKER"
+       << ' ' << worker.getFirstName()
+       << ' ' << worker.getSurName()
+       << ' ' << worker.getAddress()
+       << ' ' << worker.getIndexNumber()
+       << ' ' << worker.getPesel()
+       << ' ' << translateGender(worker.getGender())
+       << ' ' << worker.getIncome().value() << '\n';
     return os;
 }
 
 std::ostream& operator<<(std::ostream& os, const Person& person) {
-    os << person.getFirstName()
-       << " " << person.getSurName()
-       << " " << person.getAddress()
-       << " " << person.getIndexNumber()
-       << " " << person.getPesel()
-       << " " << translateGender(person.getGender()) << '\n';
-    if (auto income = person.getIncome()) {
-        os << "Income: " << income.value() << '\n';
+    if (const auto worker = dynamic_cast<const Worker*>(&person)) {
+        os << *worker;
+    } else if (const auto student = dynamic_cast<const Student*>(&person)) {
+        os << *student;
     }
     return os;
+}
+
+std::ifstream& operator>>(std::ifstream& ifs, PersonType& person) {
+    std::string type;
+
+    std::string firstName, surName, city, street, numberOfStreet, pesel;
+    size_t indexNumber;
+    std::string gender_text;
+    size_t income;
+
+    ifs >> type;
+    if (type == "WORKER") {
+        ifs >> firstName >> surName >> city >> street >> numberOfStreet >> indexNumber >> pesel >> gender_text >> income;
+        person = std::make_shared<Worker>(firstName, surName, city, street, numberOfStreet, indexNumber, pesel, textToGender(gender_text), income);
+
+    } else if (type == "STUDENT") {
+        ifs >> firstName >> surName >> city >> street >> numberOfStreet >> indexNumber >> pesel >> gender_text;
+        person = std::make_shared<Student>(firstName, surName, city, street, numberOfStreet, indexNumber, pesel, textToGender(gender_text));
+    }
+    return ifs;
 }
 
 bool Database::addPerson(const PersonType& person) {
@@ -45,8 +74,8 @@ void Database::printAll() const {
         std::cout << "Error! Empty Database!\n";
         return;
     }
-    for (const auto& student : persons_) {
-        std::cout << *student;
+    for (const auto& person : persons_) {
+        std::cout << *person;
     }
     std::cout << "\n";
 }
@@ -56,8 +85,8 @@ void Database::saveToFile(const std::string& fileName) const {
     ofs.open(fileName);
 
     if (ofs.is_open()) {
-        for (const auto& student : persons_) {
-            ofs << *student;
+        for (const auto& person : persons_) {
+            ofs << *person;
         }
     } else {
         std::cout << "Error! Could not open " << fileName << " !\n";
@@ -66,16 +95,12 @@ void Database::saveToFile(const std::string& fileName) const {
 void Database::loadFromFile(const std::string& fileName) {
     persons_.clear();
     std::ifstream ifs;
-
-    std::string firstName, surName, city, street, numberOfStreet, pesel;
-    size_t indexNumber;
-    std::string gender_text;
+    PersonType person;
 
     ifs.open(fileName);
     if (ifs.is_open()) {
-        while (ifs >> firstName >> surName >> city >> street >> numberOfStreet >> indexNumber >> pesel >> gender_text) {
-            PersonType student = std::make_shared<Student>(firstName, surName, city, street, numberOfStreet, indexNumber, pesel, textToGender(gender_text));
-            auto result = addPerson(student);
+        while (ifs >> person) {
+            auto result = addPerson(person);
             if (!result) {
                 std::cout << "Add person to database from file failed.";
             }
