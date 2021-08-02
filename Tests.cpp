@@ -32,11 +32,11 @@ const std::vector<PersonType> students = {
 
 constexpr auto baseStudentsSize = 3;
 
-void fillDatabase(Database& db){
+void fillDatabase(Database& db) {
     for (const auto& student : students) {
         auto result = db.addPerson(student);
-        if(!result){
-            std::cout <<"fillDatabase fail\n";
+        if (!result) {
+            std::cout << "fillDatabase fail\n";
         }
     }
 }
@@ -93,7 +93,7 @@ TEST_CASE("Skipp adding existing student in database", "[Database][Add]") {
     REQUIRE(db.getNumberOfStudents() == sizeBefore);
 }
 
-TEST_CASE("Sort database by surname in ascending order","[Database][Sort][SurName]"){
+TEST_CASE("Sort database by surname in ascending order", "[Database][Sort][SurName]") {
     //given
     Database db{};
     fillDatabase(db);
@@ -106,7 +106,7 @@ TEST_CASE("Sort database by surname in ascending order","[Database][Sort][SurNam
     REQUIRE(students[2]->getSurName() == "Nowak");
 }
 
-TEST_CASE("Sort database by surname in descending order","[Database][Sort][SurName]"){
+TEST_CASE("Sort database by surname in descending order", "[Database][Sort][SurName]") {
     //given
     Database db{};
     fillDatabase(db);
@@ -119,7 +119,7 @@ TEST_CASE("Sort database by surname in descending order","[Database][Sort][SurNa
     REQUIRE(students[2]->getSurName() == "Kowalski");
 }
 
-TEST_CASE("Sort database by PESEL in ascending order","[Database][Sort][PESEL]"){
+TEST_CASE("Sort database by PESEL in ascending order", "[Database][Sort][PESEL]") {
     //given
     Database db{};
     fillDatabase(db);
@@ -132,7 +132,7 @@ TEST_CASE("Sort database by PESEL in ascending order","[Database][Sort][PESEL]")
     REQUIRE(students[2]->getPesel() == "11111111111");
 }
 
-TEST_CASE("Sort database by PESEL in descending order","[Database][Sort][PESEL]"){
+TEST_CASE("Sort database by PESEL in descending order", "[Database][Sort][PESEL]") {
     //given
     Database db{};
     fillDatabase(db);

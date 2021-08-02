@@ -2,24 +2,24 @@
 #include <fstream>
 
 std::ostream& operator<<(std::ostream& os, const Student& student) {
-    os  << student.getFirstName() 
-        << " " << student.getSurName() 
-        << " " << student.getAddress() 
-        << " " << student.getIndexNumber() 
-        << " " << student.getPesel() 
-        << " " << translateGender(student.getGender()) << '\n';
+    os << student.getFirstName()
+       << " " << student.getSurName()
+       << " " << student.getAddress()
+       << " " << student.getIndexNumber()
+       << " " << student.getPesel()
+       << " " << translateGender(student.getGender()) << '\n';
     return os;
 }
 
 std::ostream& operator<<(std::ostream& os, const Person& person) {
-    os  << person.getFirstName() 
-        << " " << person.getSurName() 
-        << " " << person.getAddress() 
-        << " " << person.getIndexNumber() 
-        << " " << person.getPesel() 
-        << " " << translateGender(person.getGender()) << '\n';
-    if(auto income = person.getIncome()){
-        os << "Income: " << income.value() <<'\n';
+    os << person.getFirstName()
+       << " " << person.getSurName()
+       << " " << person.getAddress()
+       << " " << person.getIndexNumber()
+       << " " << person.getPesel()
+       << " " << translateGender(person.getGender()) << '\n';
+    if (auto income = person.getIncome()) {
+        os << "Income: " << income.value() << '\n';
     }
     return os;
 }
@@ -73,18 +73,10 @@ void Database::loadFromFile(std::string fileName) {
 
     ifs.open(fileName);
     if (ifs.is_open()) {
-        while (ifs  >> firstName 
-                    >> surName 
-                    >> city 
-                    >> street 
-                    >> numberOfStreet 
-                    >> indexNumber 
-                    >> pesel 
-                    >> gender_text) 
-        {
+        while (ifs >> firstName >> surName >> city >> street >> numberOfStreet >> indexNumber >> pesel >> gender_text) {
             PersonType student = std::make_shared<Student>(firstName, surName, city, street, numberOfStreet, indexNumber, pesel, textToGender(gender_text));
             auto result = addPerson(student);
-            if(!result){
+            if (!result) {
                 std::cout << "Add person to database from file failed.";
             }
         }

@@ -2,8 +2,8 @@
 
 #include <optional>
 #include <string>
-#include "Gender.hpp"
 #include "Address.hpp"
+#include "Gender.hpp"
 
 class Person {
 public:

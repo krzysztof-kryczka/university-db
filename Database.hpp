@@ -13,7 +13,7 @@ public:
     Database() {}
     ~Database() = default;
 
-    [[nodiscard]]bool addPerson(const PersonType& person);
+    [[nodiscard]] bool addPerson(const PersonType& person);
     void printById(const size_t& id) const;
     void printAll() const;
     void saveToFile(std::string fileName) const;
