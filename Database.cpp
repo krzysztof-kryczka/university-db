@@ -138,6 +138,18 @@ std::vector<PersonType> Database::searchByCity(const std::string& city) const {
     return result;
 }
 
+void Database::sortByPesel(std::function<bool(const std::string&, const std::string&)> compare) {
+    std::sort(begin(persons_), end(persons_), [&compare](const PersonType& lhs, const PersonType& rhs) {
+        return compare(lhs->getPesel(), rhs->getPesel());
+    });
+}
+
+void Database::sortBySurName(std::function<bool(const std::string&, const std::string&)> compare) {
+    std::sort(begin(persons_), end(persons_), [&compare](const PersonType& lhs, const PersonType& rhs) {
+        return compare(lhs->getSurName(), rhs->getSurName());
+    });
+}
+
 void Database::deleteByPesel(const std::string& pesel) {
     auto it = std::remove_if(begin(persons_), end(persons_),
                              [&pesel](const auto& person) { return person->getPesel() == pesel; });

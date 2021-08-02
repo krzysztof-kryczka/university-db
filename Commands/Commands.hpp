@@ -1,8 +1,11 @@
-#include "../Database.hpp"
+#include "../CheckPesel.hpp"
+#include "../DatabaseInterface.hpp"
+#include "../Gender.hpp"
+#include "../Student.hpp"
 #include "Command.hpp"
 
 extern std::array<std::unique_ptr<Command>, 13> options_;
-extern Database db_;
+extern std::unique_ptr<DatabaseInterface> db_;
 extern bool menuQuit;
 
 class PrintMenu : public Command {
@@ -27,7 +30,7 @@ class PrintAllRecords : public Command {
 public:
     void run() override {
         std::cout << "---------PRINT RECORDS FROM FILE-----------\n";
-        db_.printAll();
+        db_->printAll();
     }
 
     std::string getName() {
@@ -39,7 +42,7 @@ class LoadRecords : public Command {
 public:
     void run() override {
         std::cout << "---------LOAD RECORD FROM FILE-----------\n";
-        db_.loadFromFile("db.txt");
+        db_->loadFromFile("db.txt");
     }
 
     std::string getName() {
@@ -92,7 +95,7 @@ public:
 
             if (checkPesel(pesel)) {
                 PersonType student = std::make_shared<Student>(firstName, surName, city, street, numberOfStreet, index, pesel, gender);
-                auto isSuccess = db_.addPerson(student);
+                auto isSuccess = db_->addPerson(student);
                 if (isSuccess) {
                     std::cout << "Student added.\n";
                 } else {
@@ -125,8 +128,8 @@ class SortBySurname : public Command {
 public:
     void run() override {
         std::cout << "---------SORT BY SURNAME (AFTER)-----------\n";
-        db_.sortBySurName();
-        db_.printAll();
+        db_->sortBySurName(std::less<>{});
+        db_->printAll();
     }
 
     std::string getName() {
@@ -138,8 +141,8 @@ class SortByPesel : public Command {
 public:
     void run() override {
         std::cout << "---------SORT BY PESEL (AFTER)-----------\n";
-        db_.sortByPesel();
-        db_.printAll();
+        db_->sortByPesel(std::less<>{});
+        db_->printAll();
     }
 
     std::string getName() {
@@ -180,22 +183,22 @@ public:
             std::string surName;
             std::cout << "enter the search " << what << ": ";
             std::cin >> surName;
-            personsVec = db_.searchBySurName(surName);
+            personsVec = db_->searchBySurName(surName);
         } else if (what == "firstname") {
             std::string firstName;
             std::cout << "enter the search " << what << ": ";
             std::cin >> firstName;
-            personsVec = db_.searchByFirstName(firstName);
+            personsVec = db_->searchByFirstName(firstName);
         } else if (what == "city") {
             std::string city;
             std::cout << "enter the search " << what << ": ";
             std::cin >> city;
-            personsVec = db_.searchByCity(city);
+            personsVec = db_->searchByCity(city);
         } else if (what == "street") {
             std::string street;
             std::cout << "enter the search " << what << ": ";
             std::cin >> street;
-            personsVec = db_.searchByStreet(street);
+            personsVec = db_->searchByStreet(street);
         } else {
             std::cout << "Error. Unknown option, please choose from : surname, firstname, city, street\n";
             return;
@@ -220,7 +223,7 @@ public:
         std::string p;
         std::cout << "enter the search pesel: ";
         std::cin >> p;
-        auto personsVec = db_.searchByPesel(p);
+        auto personsVec = db_->searchByPesel(p);
         if (!personsVec.empty()) {
             for (const auto& person : personsVec) {
                 printPerson(person);
@@ -242,8 +245,8 @@ public:
         std::cout << "enter the pesel to be remove: ";
         std::cin >> p;
         std::cout << "---------DELETE BY PESEL (AFTER)-----------\n";
-        db_.deleteByPesel(p);
-        db_.printAll();
+        db_->deleteByPesel(p);
+        db_->printAll();
     }
 
     std::string getName() {
@@ -258,8 +261,8 @@ public:
         std::cout << "enter the index number to be remove: ";
         std::cin >> index;
         std::cout << "---------DELETE BY INDEX (AFTER)-----------\n";
-        db_.deleteByIndex(index);
-        db_.printAll();
+        db_->deleteByIndex(index);
+        db_->printAll();
     }
 
     std::string getName() {
@@ -291,7 +294,7 @@ class SaveRecords : public Command {
 public:
     void run() override {
         std::cout << "---------SAVE RECORD TO FILE-----------\n";
-        db_.saveToFile("db.txt");
+        db_->saveToFile("db.txt");
     }
 
     std::string getName() {
