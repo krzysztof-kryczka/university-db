@@ -4,6 +4,7 @@
 #include <memory>
 #include "Commands/Commands.hpp"
 #include "Database.hpp"
+#include <map>
 
 std::unique_ptr<DatabaseInterface> db_ = std::make_unique<Database>();
 bool menuQuit = false;
@@ -21,7 +22,9 @@ std::vector<std::string> order_{
     "del1",
     "del2",
     "vpesel",
-    "end"
+    "end",
+    "w",
+    "s"
 };
 
 std::map<std::string, std::shared_ptr<Command>> options_{
@@ -38,7 +41,10 @@ std::map<std::string, std::shared_ptr<Command>> options_{
     {"del2", std::make_shared<DeleteByIndexNumber>()},
     {"vpesel", std::make_shared<ValidatePeselNumber>()},
     {"save", std::make_shared<SaveRecords>()},
-    {"end", std::make_shared<EndProgram>()}};
+    {"end", std::make_shared<EndProgram>()},
+    {"w", std::make_shared<GenerateWorker>()},
+    {"s", std::make_shared<GenerateStudent>()}
+};
 
 void Menu::run() {
     options_["menu"]->run();  //show menu

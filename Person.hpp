@@ -23,11 +23,11 @@ public:
     [[nodiscard]] virtual const std::string& getFirstName() const = 0;
     [[nodiscard]] virtual const std::string& getSurName() const = 0;
     [[nodiscard]] virtual const std::string getAddress() const = 0;
-    [[nodiscard]] virtual size_t getIndexNumber() const = 0;
     [[nodiscard]] virtual const std::string& getPesel() const = 0;
     [[nodiscard]] virtual Gender getGender() const = 0;
     [[nodiscard]] virtual const std::string& getCity() const = 0;
     [[nodiscard]] virtual const std::string& getStreet() const = 0;
+    [[nodiscard]] virtual std::optional<size_t> getIndexNumber() const { return {}; }
     [[nodiscard]] virtual std::optional<size_t> getIncome() const { return {}; }
 
     friend std::ostream& operator<<(std::ostream& os, const Person& person);

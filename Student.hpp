@@ -17,14 +17,14 @@ public:
     void setPesel(const std::string& pesel) override;
     void setGender(const Gender& gender) override;
 
-    [[nodiscard]] const std::string& getFirstName() const override;
-    [[nodiscard]] const std::string& getSurName() const override;
-    [[nodiscard]] const std::string getAddress() const override;
-    [[nodiscard]] size_t getIndexNumber() const override;
-    [[nodiscard]] const std::string& getPesel() const override;
-    [[nodiscard]] Gender getGender() const override;
-    [[nodiscard]] const std::string& getCity() const override;
-    [[nodiscard]] const std::string& getStreet() const override;
+    const std::string& getFirstName() const override;
+    const std::string& getSurName() const override;
+    const std::string getAddress() const override;
+    std::optional<size_t> getIndexNumber() const override;
+    const std::string& getPesel() const override;
+    Gender getGender() const override;
+    const std::string& getCity() const override;
+    const std::string& getStreet() const override;
 
 private:
     std::string firstName_;

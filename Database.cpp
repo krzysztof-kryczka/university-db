@@ -6,7 +6,7 @@ std::ostream& operator<<(std::ostream& os, const Student& student) {
        << ' ' << student.getFirstName()
        << ' ' << student.getSurName()
        << ' ' << student.getAddress()
-       << ' ' << student.getIndexNumber()
+       << ' ' << student.getIndexNumber().value()
        << ' ' << student.getPesel()
        << ' ' << translateGender(student.getGender()) << '\n';
     return os;
@@ -17,7 +17,6 @@ std::ostream& operator<<(std::ostream& os, const Worker& worker) {
        << ' ' << worker.getFirstName()
        << ' ' << worker.getSurName()
        << ' ' << worker.getAddress()
-       << ' ' << worker.getIndexNumber()
        << ' ' << worker.getPesel()
        << ' ' << translateGender(worker.getGender())
        << ' ' << worker.getIncome().value() << '\n';
@@ -43,8 +42,8 @@ std::ifstream& operator>>(std::ifstream& ifs, PersonType& person) {
 
     ifs >> type;
     if (type == "WORKER") {
-        ifs >> firstName >> surName >> city >> street >> numberOfStreet >> indexNumber >> pesel >> gender_text >> income;
-        person = std::make_shared<Worker>(firstName, surName, city, street, numberOfStreet, indexNumber, pesel, textToGender(gender_text), income);
+        ifs >> firstName >> surName >> city >> street >> numberOfStreet >> pesel >> gender_text >> income;
+        person = std::make_shared<Worker>(firstName, surName, city, street, numberOfStreet, pesel, textToGender(gender_text), income);
 
     } else if (type == "STUDENT") {
         ifs >> firstName >> surName >> city >> street >> numberOfStreet >> indexNumber >> pesel >> gender_text;
@@ -67,6 +66,22 @@ bool Database::addPerson(const PersonType& person) {
 }
 
 void Database::printById(size_t id) const {}
+namespace {
+void printPerson(const PersonType& person) {
+    std::cout << "*******************************************\n";
+    std::cout << "FirstName: " << person->getFirstName() << '\n';
+    std::cout << "SurName:   " << person->getSurName() << '\n';
+    std::cout << "Address:   " << person->getAddress() << '\n';
+    if (auto index = person->getIndexNumber()) {
+        std::cout << "Index:     " << index.value() << '\n';
+    }
+    std::cout << "Pesel:     " << person->getPesel() << '\n';
+    if (auto income = person->getIncome()) {
+        std::cout << "Income:    " << income.value() << '\n';
+    }
+    std::cout << "*******************************************\n";
+}
+}  // namespace
 
 void Database::printAll() const {
     std::cout << "\t Database: \n";
@@ -75,7 +90,8 @@ void Database::printAll() const {
         return;
     }
     for (const auto& person : persons_) {
-        std::cout << *person;
+        //std::cout << *person;
+        printPerson(person);
     }
     std::cout << "\n";
 }
@@ -175,15 +191,15 @@ void Database::sortBySurName(std::function<bool(const std::string&, const std::s
     });
 }
 
-void Database::sortByIncome(std::function<bool(const size_t&, const size_t&)> compare){
+void Database::sortByIncome(std::function<bool(const size_t&, const size_t&)> compare) {
     std::sort(begin(persons_), end(persons_), [&compare](const PersonType& lhs, const PersonType& rhs) {
-        if(auto lIncome = lhs->getIncome()){
-            if(auto rIncome = rhs->getIncome()){
+        if (auto lIncome = lhs->getIncome()) {
+            if (auto rIncome = rhs->getIncome()) {
                 return compare(lIncome.value(), rIncome.value());
-            }else{
+            } else {
                 return true;
             }
-        }else{
+        } else {
             return false;
         }
     });
@@ -197,7 +213,12 @@ void Database::deleteByPesel(const std::string& pesel) {
 
 void Database::deleteByIndex(size_t indexNumber) {
     auto it = std::remove_if(begin(persons_), end(persons_),
-                             [indexNumber](const auto& person) { return person->getIndexNumber() == indexNumber; });
+                             [indexNumber](const auto& person) {
+                                 if (auto index = person->getIndexNumber()) {
+                                     return index.value() == indexNumber;
+                                 }
+                                 return false;
+                             });
     persons_.erase(it, persons_.end());
 }
 void Database::deleteByFirstName(const std::string& firstName) {

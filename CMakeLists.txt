@@ -8,7 +8,8 @@ set (SRC
     Database.cpp
     Menu.cpp
     Gender.cpp
-    Worker.cpp)
+    Worker.cpp
+    Commands/Commands.cpp)
 
 add_library(${PROJECT_NAME}-lib STATIC ${SRC})
 
