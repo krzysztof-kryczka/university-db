@@ -51,7 +51,7 @@ const std::string& Student::getPesel() const {
     return pesel_;
 }
 
-size_t Student::getIndexNumber() const {
+std::optional<size_t> Student::getIndexNumber() const {
     return indexNumber_;
 }
 

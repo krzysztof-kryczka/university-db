@@ -1,7 +1,7 @@
 #include "Worker.hpp"
 
-Worker::Worker(std::string firstName, std::string surName, std::string city, std::string street, std::string numberOfStreet, size_t indexNumber, std::string pesel, Gender gender, size_t income)
-    : firstName_(firstName), surName_(surName), address_{city, street, numberOfStreet}, indexNumber_(indexNumber), pesel_(pesel), gender_(gender), income_(income){}
+Worker::Worker(std::string firstName, std::string surName, std::string city, std::string street, std::string numberOfStreet, std::string pesel, Gender gender, size_t income)
+    : firstName_(firstName), surName_(surName), address_{city, street, numberOfStreet}, pesel_(pesel), gender_(gender), income_(income){}
 
 void Worker::setFirstName(const std::string& firstName) {
     firstName_ = firstName;
@@ -31,10 +31,6 @@ void Worker::setGender(const Gender& gender) {
     gender_ = gender;
 }
 
-void Worker::setIndexNumber(const size_t& indexNumber) {
-    indexNumber_ = indexNumber;
-}
-
 const std::string& Worker::getFirstName() const {
     return firstName_;
 }
@@ -51,8 +47,8 @@ const std::string& Worker::getPesel() const {
     return pesel_;
 }
 
-size_t Worker::getIndexNumber() const {
-    return indexNumber_;
+std::optional<size_t> Worker::getIncome() const { 
+    return income_; 
 }
 
 Gender Worker::getGender() const {
