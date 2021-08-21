@@ -1,10 +1,5 @@
 #include "Student.hpp"
 
-std::map<Gender, std::string> translateGender{
-    {Gender::Male, "Male"},
-    {Gender::Female, "Female"},
-    {Gender::Undefined, "Undefined"}};
-
 Student::Student(std::string firstName, std::string surName, std::string city, std::string street, std::string numberOfStreet, size_t indexNumber, std::string pesel, Gender gender)
     : firstName_(firstName), surName_(surName), address_{city, street, numberOfStreet}, indexNumber_(indexNumber), pesel_(pesel), gender_(gender) {}
 
@@ -40,23 +35,23 @@ void Student::setIndexNumber(const size_t& indexNumber) {
     indexNumber_ = indexNumber;
 }
 
-std::string Student::getFirstName() const {
+const std::string& Student::getFirstName() const {
     return firstName_;
 }
 
-std::string Student::getSurName() const {
+const std::string& Student::getSurName() const {
     return surName_;
 }
 
-std::string Student::getAddress() const {
-    return address_.getAddress();
+const std::string Student::getAddress() const {
+    return address_.city_ + " " + address_.street_ + " " + address_.numberOfStreet_;;
 }
 
-std::string Student::getPesel() const {
+const std::string& Student::getPesel() const {
     return pesel_;
 }
 
-size_t Student::getIndexNumber() const {
+std::optional<size_t> Student::getIndexNumber() const {
     return indexNumber_;
 }
 
@@ -64,28 +59,10 @@ Gender Student::getGender() const {
     return gender_;
 }
 
-std::string Student::getCity() const {
+const std::string& Student::getCity() const {
     return address_.city_;
 }
 
-std::string Student::getStreet() const {
+const std::string& Student::getStreet() const {
     return address_.street_;
-}
-
-bool checkPesel(std::string pesel) {
-    const std::string& listValidation = "1379137913";
-    int sum = 0;
-    if (pesel.size() != 11) {
-        return false;
-    }
-    for (auto i = 0; i < 10; i++) {
-        sum += ((pesel[i] - '0') * (listValidation[i] - '0')) % 10;
-    }
-    if (sum > 10) {
-        sum = sum % 10;
-    }
-    if (sum) {
-        sum = 10 - sum;
-    }
-    return sum == (pesel[10] - '0');
 }

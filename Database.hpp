@@ -1,35 +1,42 @@
 #pragma once
 
 #include <algorithm>
+#include <memory>
 #include <vector>
+#include "DatabaseInterface.hpp"
 #include "Student.hpp"
+#include "Worker.hpp"
 
-class Database {
+class Database : public DatabaseInterface {
 public:
     Database() {}
+    ~Database() override = default;
 
-    bool addStudent(Student student);
-    void printById(const size_t& id) const;
-    void printAll() const;
-    void saveToFile(std::string fileName) const;
-    void loadFromFile(std::string fileName);
+    [[nodiscard]] bool addPerson(const PersonType& person) override;
+    void printById(size_t id) const override;
+    void printAll() const override;
+    void saveToFile(const std::string& fileName) const override;
+    void loadFromFile(const std::string& fileName) override;
 
-    size_t getNumberOfStudents() const;
+    [[nodiscard]] std::vector<PersonType> searchByPesel(const std::string& pesel) const override;
+    [[nodiscard]] std::vector<PersonType> searchByFirstName(const std::string& firstName) const override;
+    [[nodiscard]] std::vector<PersonType> searchBySurName(const std::string& surName) const override;
+    [[nodiscard]] std::vector<PersonType> searchByStreet(const std::string& street) const override;
+    [[nodiscard]] std::vector<PersonType> searchByCity(const std::string& city) const override;
 
-    std::vector<Student> searchByPesel(const std::string& pesel) const;
-    std::vector<Student> searchByFirstName(const std::string& firstName) const;
-    std::vector<Student> searchBySurName(const std::string& surName) const;
-    std::vector<Student> searchByStreet(const std::string& street) const;
-    std::vector<Student> searchByCity(const std::string& city) const;
+    void sortByPesel(std::function<bool(const std::string&, const std::string&)> compare) override;
+    void sortBySurName(std::function<bool(const std::string&, const std::string&)> compare) override;
+    void sortByIncome(std::function<bool(const size_t&, const size_t&)> compare) override;
 
-    void sortByPesel();
-    void sortBySurName();
+    void deleteByPesel(const std::string& pesel) override;
+    void deleteByIndex(size_t indexNumber) override;
+    void deleteByFirstName(const std::string& FirstName) override;
+    void deleteBySurName(const std::string& SurName) override;
 
-    void deleteByPesel(std::string pesel);
-    void deleteByIndex(size_t indexNumber);
-    void deleteByFirstName(std::string FirstName);
-    void deleteBySurName(std::string SurName);
+    size_t getNumberOfStudents() const override;
+
+    [[nodiscard]] const std::vector<PersonType>& getPersons() const override;
 
 private:
-    std::vector<Student> students_;
+    std::vector<PersonType> persons_{};
 };
