@@ -1,5 +1,4 @@
 #pragma once
-
 #include <optional>
 #include <string>
 #include "Address.hpp"
@@ -29,6 +28,8 @@ public:
     [[nodiscard]] virtual const std::string& getStreet() const = 0;
     [[nodiscard]] virtual std::optional<size_t> getIndexNumber() const { return {}; }
     [[nodiscard]] virtual std::optional<size_t> getIncome() const { return {}; }
+
+    virtual void printPerson() const {}
 
     friend std::ostream& operator<<(std::ostream& os, const Person& person);
 };
