@@ -16,6 +16,7 @@
 #include "SortByPesel.hpp"
 #include "SortBySurname.hpp"
 #include "ValidatePeselNumber.hpp"
+#include "ChangeIncome.hpp"
 
 std::unique_ptr<DatabaseInterface> Command::db_ = std::make_unique<Database>();
 
@@ -34,6 +35,7 @@ std::vector<std::string> Command::order_{
     "del1",
     "del2",
     "vpesel",
+    "change",
     "q",
     "w",
     "s"};
@@ -51,6 +53,7 @@ std::map<std::string, std::shared_ptr<Command>> Command::options_{
     {"del1", std::make_shared<DeleteByPesel>()},
     {"del2", std::make_shared<DeleteByIndexNumber>()},
     {"vpesel", std::make_shared<ValidatePeselNumber>()},
+    {"change", std::make_shared<ChangeIncome>()},
     {"save", std::make_shared<SaveRecords>()},
     {"q", std::make_shared<EndProgram>()},
     {"w", std::make_shared<GenerateWorker>()},

@@ -2,8 +2,6 @@
 #include <iostream>
 #include "../Person.hpp"
 
-extern void printPerson(const PersonType& person);
-
 void SearchByPesel::run() {
     std::string pesel;
     std::cout << "enter the search pesel: ";

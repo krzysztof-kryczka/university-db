@@ -2,8 +2,6 @@
 #include <iostream>
 #include "../Person.hpp"
 
-extern void printPerson(const PersonType& person);
-
 void SearchOption::run() {
     std::vector<PersonType> personsVec;
     std::string what;
