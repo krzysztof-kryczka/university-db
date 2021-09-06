@@ -1,4 +1,5 @@
 #include "Student.hpp"
+#include <iostream>
 
 Student::Student(std::string firstName, std::string surName, std::string city, std::string street, std::string numberOfStreet, size_t indexNumber, std::string pesel, Gender gender)
     : firstName_(firstName), surName_(surName), address_{city, street, numberOfStreet}, indexNumber_(indexNumber), pesel_(pesel), gender_(gender) {}
@@ -44,7 +45,8 @@ const std::string& Student::getSurName() const {
 }
 
 const std::string Student::getAddress() const {
-    return address_.city_ + " " + address_.street_ + " " + address_.numberOfStreet_;;
+    return address_.city_ + " " + address_.street_ + " " + address_.numberOfStreet_;
+    ;
 }
 
 const std::string& Student::getPesel() const {
@@ -65,4 +67,14 @@ const std::string& Student::getCity() const {
 
 const std::string& Student::getStreet() const {
     return address_.street_;
+}
+
+void Student::printPerson() const {
+    std::cout << "*******************************************\n";
+    std::cout << "FirstName: " << getFirstName() << '\n';
+    std::cout << "SurName:   " << getSurName() << '\n';
+    std::cout << "Address:   " << getAddress() << '\n';
+    std::cout << "Index:     " << getIndexNumber().value() << '\n';
+    std::cout << "Pesel:     " << getPesel() << '\n';
+    std::cout << "*******************************************\n";
 }

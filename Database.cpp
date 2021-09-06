@@ -108,6 +108,7 @@ void Database::saveToFile(const std::string& fileName) const {
         std::cout << "Error! Could not open " << fileName << " !\n";
     }
 }
+
 void Database::loadFromFile(const std::string& fileName) {
     persons_.clear();
     std::ifstream ifs;
@@ -159,6 +160,7 @@ std::vector<PersonType> Database::searchBySurName(const std::string& surName) co
     }
     return result;
 }
+
 std::vector<PersonType> Database::searchByStreet(const std::string& street) const {
     std::vector<PersonType> result;
     for (const auto& person : persons_) {
@@ -221,11 +223,13 @@ void Database::deleteByIndex(size_t indexNumber) {
                              });
     persons_.erase(it, persons_.end());
 }
+
 void Database::deleteByFirstName(const std::string& firstName) {
     auto it = std::remove_if(begin(persons_), end(persons_),
                              [&firstName](const auto& person) { return person->getFirstName() == firstName; });
     persons_.erase(it, persons_.end());
 }
+
 void Database::deleteBySurName(const std::string& surName) {
     auto it = std::remove_if(begin(persons_), end(persons_),
                              [&surName](const auto& person) { return person->getSurName() == surName; });

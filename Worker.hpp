@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Address.hpp"
 #include "Person.hpp"
 
@@ -25,6 +24,8 @@ public:
     const std::string& getCity() const override;
     const std::string& getStreet() const override;
     std::optional<size_t> getIncome() const override;
+
+    void printPerson() const override;
 
 private:
     std::string firstName_;

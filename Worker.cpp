@@ -1,7 +1,8 @@
 #include "Worker.hpp"
+#include <iostream>
 
 Worker::Worker(std::string firstName, std::string surName, std::string city, std::string street, std::string numberOfStreet, std::string pesel, Gender gender, size_t income)
-    : firstName_(firstName), surName_(surName), address_{city, street, numberOfStreet}, pesel_(pesel), gender_(gender), income_(income){}
+    : firstName_(firstName), surName_(surName), address_{city, street, numberOfStreet}, pesel_(pesel), gender_(gender), income_(income) {}
 
 void Worker::setFirstName(const std::string& firstName) {
     firstName_ = firstName;
@@ -47,8 +48,8 @@ const std::string& Worker::getPesel() const {
     return pesel_;
 }
 
-std::optional<size_t> Worker::getIncome() const { 
-    return income_; 
+std::optional<size_t> Worker::getIncome() const {
+    return income_;
 }
 
 Gender Worker::getGender() const {
@@ -61,4 +62,14 @@ const std::string& Worker::getCity() const {
 
 const std::string& Worker::getStreet() const {
     return address_.street_;
+}
+
+void Worker::printPerson() const {
+    std::cout << "*******************************************\n";
+    std::cout << "FirstName: " << getFirstName() << '\n';
+    std::cout << "SurName:   " << getSurName() << '\n';
+    std::cout << "Address:   " << getAddress() << '\n';
+    std::cout << "Pesel:     " << getPesel() << '\n';
+    std::cout << "Income:    " << getIncome().value() << '\n';
+    std::cout << "*******************************************\n";
 }
