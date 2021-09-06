@@ -19,7 +19,8 @@ set(COMMAND
     Commands/SortByIncome.cpp
     Commands/SortByPesel.cpp
     Commands/SortBySurname.cpp
-    Commands/ValidatePeselNumber.cpp)
+    Commands/ValidatePeselNumber.cpp
+    Commands/ChangeIncome.cpp)
 
 set(SRC
     Student.cpp

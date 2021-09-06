@@ -66,22 +66,6 @@ bool Database::addPerson(const PersonType& person) {
 }
 
 void Database::printById(size_t id) const {}
-namespace {
-void printPerson(const PersonType& person) {
-    std::cout << "*******************************************\n";
-    std::cout << "FirstName: " << person->getFirstName() << '\n';
-    std::cout << "SurName:   " << person->getSurName() << '\n';
-    std::cout << "Address:   " << person->getAddress() << '\n';
-    if (auto index = person->getIndexNumber()) {
-        std::cout << "Index:     " << index.value() << '\n';
-    }
-    std::cout << "Pesel:     " << person->getPesel() << '\n';
-    if (auto income = person->getIncome()) {
-        std::cout << "Income:    " << income.value() << '\n';
-    }
-    std::cout << "*******************************************\n";
-}
-}  // namespace
 
 void Database::printAll() const {
     std::cout << "\t Database: \n";
@@ -90,8 +74,7 @@ void Database::printAll() const {
         return;
     }
     for (const auto& person : persons_) {
-        //std::cout << *person;
-        printPerson(person);
+        person->printPerson();
     }
     std::cout << "\n";
 }
