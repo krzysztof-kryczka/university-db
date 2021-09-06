@@ -162,10 +162,10 @@ void printPerson(const PersonType& person) {
     if (auto index = person->getIndexNumber()) {
         std::cout << "Index:     " << index.value() << '\n';
     }
-    std::cout << "Pesel:     " << person->getPesel() << '\n';
     if (auto income = person->getIncome()) {
         std::cout << "Income:    " << income.value() << '\n';
     }
+    std::cout << "Pesel:     " << person->getPesel() << '\n';
     std::cout << "*******************************************\n";
 }
 }  // namespace

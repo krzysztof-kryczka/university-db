@@ -14,6 +14,7 @@ std::vector<std::string> order_{
     "show",
     "load",
     "save",
+    "a",
     "search1",
     "search2",
     "sort1",
@@ -22,7 +23,7 @@ std::vector<std::string> order_{
     "del1",
     "del2",
     "vpesel",
-    "end",
+    "q",
     "w",
     "s"
 };
@@ -31,7 +32,7 @@ std::map<std::string, std::shared_ptr<Command>> options_{
     {"menu", std::make_shared<PrintMenu>()},
     {"show", std::make_shared<PrintAllRecords>()},
     {"load", std::make_shared<LoadRecords>()},
-    {"add", std::make_shared<AddStudent>()},
+    {"a", std::make_shared<AddStudent>()},
     {"search1", std::make_shared<SearchOption>()},
     {"search2", std::make_shared<SearchByPesel>()},
     {"sort1", std::make_shared<SortBySurname>()},
@@ -41,7 +42,7 @@ std::map<std::string, std::shared_ptr<Command>> options_{
     {"del2", std::make_shared<DeleteByIndexNumber>()},
     {"vpesel", std::make_shared<ValidatePeselNumber>()},
     {"save", std::make_shared<SaveRecords>()},
-    {"end", std::make_shared<EndProgram>()},
+    {"q", std::make_shared<EndProgram>()},
     {"w", std::make_shared<GenerateWorker>()},
     {"s", std::make_shared<GenerateStudent>()}
 };
