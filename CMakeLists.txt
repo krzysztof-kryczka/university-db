@@ -28,8 +28,7 @@ set(SRC
     Menu.cpp
     Gender.cpp
     Worker.cpp
-    CheckPesel.cpp
-    Commands/Commands.cpp)
+    CheckPesel.cpp)
 
 add_library(${PROJECT_NAME}-lib STATIC ${SRC} ${COMMAND})
 

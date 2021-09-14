@@ -6,6 +6,6 @@ void PrintAllRecords::run() {
     db_->printAll();
 }
 
-std::string PrintAllRecords::getName() {
+std::string PrintAllRecords::getName() const {
     return "Print All Records";
 }

@@ -1,9 +1,11 @@
 #include "EndGame.hpp"
 
+EndProgram::EndProgram(bool& end): end_(end) {}
+
 void EndProgram::run() {
-    Command::quit = true;
+    end_ = true;
 }
 
-std::string EndProgram::getName() {
+std::string EndProgram::getName() const {
     return "End Program";
 }

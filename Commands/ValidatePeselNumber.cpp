@@ -15,6 +15,6 @@ void ValidatePeselNumber::run() {
     }
 }
 
-std::string ValidatePeselNumber::getName() {
+std::string ValidatePeselNumber::getName() const {
     return "Validate PESEL";
 }

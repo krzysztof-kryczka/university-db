@@ -1,5 +1,13 @@
 #include "Gender.hpp"
 
+namespace {
+constexpr std::array genderIdx = {
+    Gender::Male, Gender::Female, Gender::Undefined};
+
+constexpr std::array genderText = {
+    "Male", "Female", "Undefined"};    
+}
+
 Gender textToGender(const std::string& text) {
     size_t idx = 0;
     for (const auto& gender : genderText) {

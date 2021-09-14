@@ -27,6 +27,8 @@ public:
 
     void printPerson() const override;
 
+    friend std::ostream& operator<<(std::ostream& os, const Worker& worker);
+
 private:
     std::string firstName_;
     std::string surName_;
@@ -35,3 +37,5 @@ private:
     Address address_;
     size_t income_{};
 };
+
+std::ostream& operator<<(std::ostream& os, const Worker& worker);

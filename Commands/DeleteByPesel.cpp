@@ -10,6 +10,6 @@ void DeleteByPesel::run() {
     db_->printAll();
 }
 
-std::string DeleteByPesel::getName() {
+std::string DeleteByPesel::getName() const {
     return "Delete By Pesel";
 }

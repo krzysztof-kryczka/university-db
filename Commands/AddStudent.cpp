@@ -70,6 +70,6 @@ void AddStudent::run() {
     }
 }
 
-std::string AddStudent::getName() {
+std::string AddStudent::getName() const {
     return "Add Student";
 }

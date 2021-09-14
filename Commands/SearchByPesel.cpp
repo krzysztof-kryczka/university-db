@@ -16,6 +16,6 @@ void SearchByPesel::run() {
     }
 }
 
-std::string SearchByPesel::getName() {
+std::string SearchByPesel::getName() const {
     return "Search By Pesel";
 }

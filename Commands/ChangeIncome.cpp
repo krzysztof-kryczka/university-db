@@ -70,6 +70,6 @@ void ChangeIncome::run() {
     }
 }
 
-std::string ChangeIncome::getName() {
+std::string ChangeIncome::getName() const {
     return "Change income";
 }

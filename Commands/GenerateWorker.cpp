@@ -39,6 +39,6 @@ void GenerateWorker::run() {
     }
 }
 
-std::string GenerateWorker::getName() {
+std::string GenerateWorker::getName() const {
     return "Generate Worker";
 }

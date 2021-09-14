@@ -7,6 +7,6 @@ void SortByIncome::run() {
     db_->printAll();
 }
 
-std::string SortByIncome::getName() {
+std::string SortByIncome::getName() const {
     return "Sort By Income";
 }

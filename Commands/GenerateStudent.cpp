@@ -36,6 +36,6 @@ void GenerateStudent::run() {
     }
 }
 
-std::string GenerateStudent::getName() {
+std::string GenerateStudent::getName() const {
     return "Generate Student";
 }

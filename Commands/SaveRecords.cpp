@@ -6,6 +6,6 @@ void SaveRecords::run() {
     db_->saveToFile("db.txt");
 }
 
-std::string SaveRecords::getName() {
+std::string SaveRecords::getName() const {
     return "Save Records";
 }

@@ -7,6 +7,6 @@ void SortBySurname::run() {
     db_->printAll();
 }
 
-std::string SortBySurname::getName() {
+std::string SortBySurname::getName() const {
     return "Sort By Surname";
 }

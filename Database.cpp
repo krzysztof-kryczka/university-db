@@ -1,40 +1,22 @@
 #include "Database.hpp"
 #include <fstream>
-
-std::ostream& operator<<(std::ostream& os, const Student& student) {
-    os << "STUDENT"
-       << ' ' << student.getFirstName()
-       << ' ' << student.getSurName()
-       << ' ' << student.getAddress()
-       << ' ' << student.getIndexNumber().value()
-       << ' ' << student.getPesel()
-       << ' ' << translateGender(student.getGender()) << '\n';
-    return os;
-}
-
-std::ostream& operator<<(std::ostream& os, const Worker& worker) {
-    os << "WORKER"
-       << ' ' << worker.getFirstName()
-       << ' ' << worker.getSurName()
-       << ' ' << worker.getAddress()
-       << ' ' << worker.getPesel()
-       << ' ' << translateGender(worker.getGender())
-       << ' ' << worker.getIncome().value() << '\n';
-    return os;
-}
+#include <iomanip>
 
 std::ostream& operator<<(std::ostream& os, const Person& person) {
     if (const auto worker = dynamic_cast<const Worker*>(&person)) {
         os << *worker;
-    } else if (const auto student = dynamic_cast<const Student*>(&person)) {
+        return os;
+    } 
+    if (const auto student = dynamic_cast<const Student*>(&person)) {
         os << *student;
+        return os;
     }
+    std::cout << "Unknown person type(push to stream ignored).\n";
     return os;
 }
 
 std::ifstream& operator>>(std::ifstream& ifs, PersonType& person) {
     std::string type;
-
     std::string firstName, surName, city, street, numberOfStreet, pesel;
     size_t indexNumber;
     std::string gender_text;
@@ -42,14 +24,33 @@ std::ifstream& operator>>(std::ifstream& ifs, PersonType& person) {
 
     ifs >> type;
     if (type == "WORKER") {
-        ifs >> firstName >> surName >> city >> street >> numberOfStreet >> pesel >> gender_text >> income;
+        ifs >> std::quoted(firstName)
+            >> std::quoted(surName)
+            >> std::quoted(city)
+            >> std::quoted(street)
+            >> std::quoted(numberOfStreet)
+            >> std::quoted(pesel)
+            >> gender_text 
+            >> income;
         person = std::make_shared<Worker>(firstName, surName, city, street, numberOfStreet, pesel, textToGender(gender_text), income);
-
-    } else if (type == "STUDENT") {
-        ifs >> firstName >> surName >> city >> street >> numberOfStreet >> indexNumber >> pesel >> gender_text;
+        return ifs;
+    } 
+    if (type == "STUDENT") {
+        ifs >> std::quoted(firstName)
+            >> std::quoted(surName)
+            >> std::quoted(city)
+            >> std::quoted(street)
+            >> std::quoted(numberOfStreet)
+            >> indexNumber 
+            >> std::quoted(pesel)
+            >> gender_text;
         person = std::make_shared<Student>(firstName, surName, city, street, numberOfStreet, indexNumber, pesel, textToGender(gender_text));
+        return ifs;
     }
-    return ifs;
+    if (type == "") {
+        return ifs;
+    }
+    throw std::logic_error("Don't know how to read this type of person:" + type);
 }
 
 bool Database::addPerson(const PersonType& person) {
@@ -102,11 +103,11 @@ void Database::loadFromFile(const std::string& fileName) {
         while (ifs >> person) {
             auto result = addPerson(person);
             if (!result) {
-                std::cout << "Add person to database from file failed.";
+                std::cout << "Add person to database from file failed.\n";
             }
         }
     } else {
-        std::cout << "Error. Invalid data";
+        std::cout << "Error! Invalid data.\n";
     }
 }
 

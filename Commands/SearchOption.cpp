@@ -41,6 +41,6 @@ void SearchOption::run() {
     }
 }
 
-std::string SearchOption::getName() {
+std::string SearchOption::getName() const {
     return "Search";
 }

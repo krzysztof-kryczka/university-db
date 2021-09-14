@@ -10,6 +10,6 @@ void DeleteByIndexNumber::run() {
     db_->printAll();
 }
 
-std::string DeleteByIndexNumber::getName() {
+std::string DeleteByIndexNumber::getName() const {
     return "Delete By Index";
 }

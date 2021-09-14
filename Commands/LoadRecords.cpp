@@ -6,6 +6,6 @@ void LoadRecords::run() {
     db_->loadFromFile("db.txt");
 }
 
-std::string LoadRecords::getName() {
+std::string LoadRecords::getName() const {
     return "Load Records";
 }

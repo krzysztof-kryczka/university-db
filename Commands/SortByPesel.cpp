@@ -7,6 +7,6 @@ void SortByPesel::run() {
     db_->printAll();
 }
 
-std::string SortByPesel::getName() {
+std::string SortByPesel::getName() const {
     return "Sort By Pesel";
 }

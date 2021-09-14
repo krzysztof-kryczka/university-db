@@ -2,6 +2,6 @@
 
 class Menu {
 public:
-    Menu() = default;
+    Menu();
     void run();
 };

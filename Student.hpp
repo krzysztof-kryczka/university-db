@@ -27,6 +27,8 @@ public:
 
     void printPerson() const override;
 
+    friend std::ostream& operator<<(std::ostream& os, const Student& student);
+
 private:
     std::string firstName_;
     std::string surName_;
@@ -35,3 +37,5 @@ private:
     std::string pesel_;
     Gender gender_ = Gender::Undefined;
 };
+
+std::ostream& operator<<(std::ostream& os, const Student& student);

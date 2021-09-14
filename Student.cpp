@@ -1,5 +1,6 @@
 #include "Student.hpp"
 #include <iostream>
+#include <iomanip>
 
 Student::Student(std::string firstName, std::string surName, std::string city, std::string street, std::string numberOfStreet, size_t indexNumber, std::string pesel, Gender gender)
     : firstName_(firstName), surName_(surName), address_{city, street, numberOfStreet}, indexNumber_(indexNumber), pesel_(pesel), gender_(gender) {}
@@ -45,8 +46,9 @@ const std::string& Student::getSurName() const {
 }
 
 const std::string Student::getAddress() const {
-    return address_.city_ + " " + address_.street_ + " " + address_.numberOfStreet_;
-    ;
+    std::stringstream ss;
+    ss << std::quoted(address_.city_) << " " << std::quoted(address_.street_) << " " << std::quoted(address_.numberOfStreet_);
+    return ss.str();
 }
 
 const std::string& Student::getPesel() const {
@@ -77,4 +79,15 @@ void Student::printPerson() const {
     std::cout << "Index:     " << getIndexNumber().value() << '\n';
     std::cout << "Pesel:     " << getPesel() << '\n';
     std::cout << "*******************************************\n";
+}
+
+std::ostream& operator<<(std::ostream& os, const Student& student) {
+    os << "STUDENT"
+       << ' ' << std::quoted(student.getFirstName())
+       << ' ' << std::quoted(student.getSurName())
+       << ' ' << student.getAddress()
+       << ' ' << student.getIndexNumber().value()
+       << ' ' << std::quoted(student.getPesel())
+       << ' ' << translateGender(student.getGender()) << '\n';
+    return os;
 }

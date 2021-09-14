@@ -8,10 +8,7 @@ public:
     virtual ~Command() = default;
 
     virtual void run() = 0;
-    virtual std::string getName() = 0;
+    virtual std::string getName() const = 0;
 
-    static std::map<std::string, std::shared_ptr<Command>> options_;
     static std::unique_ptr<DatabaseInterface> db_;
-    static std::vector<std::string> order_;
-    static bool quit;
 };

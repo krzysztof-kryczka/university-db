@@ -1,5 +1,6 @@
 #include "Worker.hpp"
 #include <iostream>
+#include <iomanip>
 
 Worker::Worker(std::string firstName, std::string surName, std::string city, std::string street, std::string numberOfStreet, std::string pesel, Gender gender, size_t income)
     : firstName_(firstName), surName_(surName), address_{city, street, numberOfStreet}, pesel_(pesel), gender_(gender), income_(income) {}
@@ -41,7 +42,9 @@ const std::string& Worker::getSurName() const {
 }
 
 const std::string Worker::getAddress() const {
-    return address_.city_ + " " + address_.street_ + " " + address_.numberOfStreet_;
+    std::stringstream ss;
+    ss << std::quoted(address_.city_) << " " << std::quoted(address_.street_) << " " << std::quoted(address_.numberOfStreet_);
+    return ss.str();
 }
 
 const std::string& Worker::getPesel() const {
@@ -72,4 +75,15 @@ void Worker::printPerson() const {
     std::cout << "Pesel:     " << getPesel() << '\n';
     std::cout << "Income:    " << getIncome().value() << '\n';
     std::cout << "*******************************************\n";
+}
+
+std::ostream& operator<<(std::ostream& os, const Worker& worker) {
+    os << "WORKER"
+       << ' ' << std::quoted(worker.getFirstName())
+       << ' ' << std::quoted(worker.getSurName())
+       << ' ' << worker.getAddress()
+       << ' ' << std::quoted(worker.getPesel())
+       << ' ' << translateGender(worker.getGender())
+       << ' ' << worker.getIncome().value() << '\n';
+    return os;
 }
