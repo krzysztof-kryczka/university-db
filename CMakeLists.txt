@@ -23,6 +23,7 @@ set(COMMAND
     Commands/ChangeIncome.cpp)
 
 set(SRC
+    Person.cpp
     Student.cpp
     Database.cpp
     Menu.cpp

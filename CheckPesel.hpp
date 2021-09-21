@@ -1,4 +1,4 @@
 #pragma once
 #include <string>
 
-bool checkPesel(std::string pesel);
+bool checkPesel(const std::string& pesel);

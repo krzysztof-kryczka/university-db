@@ -9,5 +9,4 @@ enum class Gender : char {
 };
 
 Gender textToGender(const std::string& text);
-std::string translateGender(const Gender& gender);
-std::string translateGender(int genderId);
+std::string translateGender(Gender gender);

@@ -34,7 +34,7 @@ public:
     virtual void deleteByFirstName(const std::string& FirstName) = 0;
     virtual void deleteBySurName(const std::string& SurName) = 0;
 
-    virtual size_t getNumberOfStudents() const = 0;
+    virtual size_t getNumberOfPersons() const = 0;
 
     [[nodiscard]] virtual const std::vector<PersonType>& getPersons() const = 0;
 };

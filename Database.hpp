@@ -32,7 +32,7 @@ public:
     void deleteByFirstName(const std::string& FirstName) override;
     void deleteBySurName(const std::string& SurName) override;
 
-    size_t getNumberOfStudents() const override;
+    size_t getNumberOfPersons() const override;
 
     [[nodiscard]] const std::vector<PersonType>& getPersons() const override;
 

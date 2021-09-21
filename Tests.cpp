@@ -11,6 +11,12 @@ constexpr auto anotherExistPesel = "01234567890";
 constexpr auto onceExistPesel = "00000000000";
 constexpr auto secondExistPesel = "11111111111";
 
+constexpr std::array peselOrder = {
+    onceExistPesel,
+    anotherExistPesel,
+    secondExistPesel
+};
+
 constexpr std::array studentName = {
     "A", "B", "CCCCCCCCCCCCCCCCCCCCCCCCCCCCC"};
 
@@ -102,9 +108,9 @@ TEST_CASE("Sort database by surname in ascending order", "[Database][Sort][SurNa
     db.sortBySurName(std::less<>{});
     //then
     const auto& students = db.getPersons();
-    REQUIRE(students[0]->getSurName() == "Kowalski");
-    REQUIRE(students[1]->getSurName() == "Kowalski");
-    REQUIRE(students[2]->getSurName() == "Nowak");
+    REQUIRE(students[0]->getSurName() == twiceExistSurName);
+    REQUIRE(students[1]->getSurName() == twiceExistSurName);
+    REQUIRE(students[2]->getSurName() == onceExistSurName);
 }
 
 TEST_CASE("Sort database by surname in descending order", "[Database][Sort][SurName]") {
@@ -115,9 +121,9 @@ TEST_CASE("Sort database by surname in descending order", "[Database][Sort][SurN
     db.sortBySurName(std::greater{});
     //then
     const auto& students = db.getPersons();
-    REQUIRE(students[0]->getSurName() == "Nowak");
-    REQUIRE(students[1]->getSurName() == "Kowalski");
-    REQUIRE(students[2]->getSurName() == "Kowalski");
+    REQUIRE(students[0]->getSurName() == onceExistSurName);
+    REQUIRE(students[1]->getSurName() == twiceExistSurName);
+    REQUIRE(students[2]->getSurName() == twiceExistSurName);
 }
 
 TEST_CASE("Sort database by PESEL in ascending order", "[Database][Sort][PESEL]") {
@@ -128,9 +134,9 @@ TEST_CASE("Sort database by PESEL in ascending order", "[Database][Sort][PESEL]"
     db.sortByPesel(std::less<>{});
     //then
     const auto& students = db.getPersons();
-    REQUIRE(students[0]->getPesel() == "00000000000");
-    REQUIRE(students[1]->getPesel() == "01234567890");
-    REQUIRE(students[2]->getPesel() == "11111111111");
+    REQUIRE(students[0]->getPesel() == peselOrder[0]);
+    REQUIRE(students[1]->getPesel() == peselOrder[1]);
+    REQUIRE(students[2]->getPesel() == peselOrder[2]);
 }
 
 TEST_CASE("Sort database by PESEL in descending order", "[Database][Sort][PESEL]") {
@@ -141,9 +147,9 @@ TEST_CASE("Sort database by PESEL in descending order", "[Database][Sort][PESEL]
     db.sortByPesel(std::greater{});
     //then
     const auto& students = db.getPersons();
-    REQUIRE(students[0]->getPesel() == "11111111111");
-    REQUIRE(students[1]->getPesel() == "01234567890");
-    REQUIRE(students[2]->getPesel() == "00000000000");
+    REQUIRE(students[0]->getPesel() == peselOrder[2]);
+    REQUIRE(students[1]->getPesel() == peselOrder[1]);
+    REQUIRE(students[2]->getPesel() == peselOrder[0]);
 }
 
 TEST_CASE("Search by SurName in empty database", "[Database][Search][SurName]") {

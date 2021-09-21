@@ -1,5 +1,6 @@
 #include "Menu.hpp"
 #include <iostream>
+#include <iomanip>
 #include "Commands/Commands.hpp"
 #include "Database.hpp"
 
@@ -13,7 +14,7 @@ bool quit = false;
 Menu::Menu() {
     options = std::map<std::string, std::shared_ptr<Command>>{
     {"menu", std::make_shared<PrintMenu>(options,
-                                    std::vector<std::string>{
+                                    std::vector<std::string>{ // print order
                                         "menu",
                                         "show",
                                         "load",
@@ -55,14 +56,14 @@ void Menu::run() {
         auto it = options.find(command);
         if (it != options.end()) {
             it->second->run();
-        } else {
-            std::cout << "Wrong option!\n";
-        }
+            return;
+        } 
+        std::cout << "Wrong option!\n";
     };
 
     while (!quit) {
-        std::string command;
         std::cout << "Write command: ";
+        std::string command;
         std::cin >> command;
         runOption(command);
     }

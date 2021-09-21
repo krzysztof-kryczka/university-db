@@ -111,7 +111,7 @@ void Database::loadFromFile(const std::string& fileName) {
     }
 }
 
-size_t Database::getNumberOfStudents() const {
+size_t Database::getNumberOfPersons() const {
     return persons_.size();
 }
 

@@ -1,7 +1,7 @@
 #include "CheckPesel.hpp"
 
-bool checkPesel(std::string pesel) {
-    const std::string& listValidation = "1379137913";
+bool checkPesel(const std::string& pesel) {
+    const std::string listValidation = "1379137913";
     int sum = 0;
     if (pesel.size() != 11) {
         return false;
