@@ -73,31 +73,31 @@ TEST_CASE("Add Student to empty database", "[Database][Add]") {
     auto isSuccess = db.addPerson(students[0]);
     //then
     REQUIRE(isSuccess);
-    REQUIRE(db.getNumberOfStudents() == 1);
+    REQUIRE(db.getNumberOfPersons() == 1);
 }
 
 TEST_CASE("Add new Student to existing database", "[Database][Add]") {
     //given
     Database db{};
     fillDatabase(db);
-    auto sizeBefore = db.getNumberOfStudents();
+    auto sizeBefore = db.getNumberOfPersons();
     //when
     auto isSuccess = db.addPerson(otherStudent);
     //then
     REQUIRE(isSuccess);
-    REQUIRE(db.getNumberOfStudents() == sizeBefore + 1);
+    REQUIRE(db.getNumberOfPersons() == sizeBefore + 1);
 }
 
 TEST_CASE("Skipp adding existing student in database", "[Database][Add]") {
     //given
     Database db{};
     fillDatabase(db);
-    auto sizeBefore = db.getNumberOfStudents();
+    auto sizeBefore = db.getNumberOfPersons();
     //when
     auto isSuccess = db.addPerson(students[0]);
     //then
     REQUIRE(!isSuccess);
-    REQUIRE(db.getNumberOfStudents() == sizeBefore);
+    REQUIRE(db.getNumberOfPersons() == sizeBefore);
 }
 
 TEST_CASE("Sort database by surname in ascending order", "[Database][Sort][SurName]") {
@@ -245,7 +245,7 @@ TEST_CASE("Delete by PESEL in empty database", "[Database][Delete][PESEL]") {
     //when
     db.deleteByPesel(nonExistPesel);
     //then
-    REQUIRE(db.getNumberOfStudents() == 0);
+    REQUIRE(db.getNumberOfPersons() == 0);
 }
 
 TEST_CASE("Delete by nonexist PESEL in database", "[Database][Delete][PESEL]") {
@@ -255,7 +255,7 @@ TEST_CASE("Delete by nonexist PESEL in database", "[Database][Delete][PESEL]") {
     //when
     db.deleteByPesel(nonExistPesel);
     //then
-    REQUIRE(db.getNumberOfStudents() == students.size());
+    REQUIRE(db.getNumberOfPersons() == students.size());
 }
 
 TEST_CASE("Delete by PESEL exist once in database", "[Database][Delete][PESEL]") {
@@ -265,5 +265,5 @@ TEST_CASE("Delete by PESEL exist once in database", "[Database][Delete][PESEL]")
     //when
     db.deleteByPesel(onceExistPesel);
     //then
-    REQUIRE(db.getNumberOfStudents() == students.size() - 1);
+    REQUIRE(db.getNumberOfPersons() == students.size() - 1);
 }
