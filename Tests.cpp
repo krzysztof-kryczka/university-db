@@ -7,37 +7,72 @@
 #include "CheckPesel.hpp"
 
 constexpr auto nonExistPesel = "90000000000";
-constexpr auto anotherExistPesel = "01234567890";
-constexpr auto onceExistPesel = "00000000000";
-constexpr auto secondExistPesel = "11111111111";
+constexpr auto ExistPesel_1 = "00000000000";
+constexpr auto ExistPesel_2 = "01234567890";
+constexpr auto ExistPesel_3 = "11111111111";
 
 constexpr std::array peselOrder = {
-    onceExistPesel,
-    anotherExistPesel,
-    secondExistPesel
+    ExistPesel_1,
+    ExistPesel_2,
+    ExistPesel_3
 };
 
-constexpr std::array studentName = {
-    "A", "B", "CCCCCCCCCCCCCCCCCCCCCCCCCCCCC"};
+constexpr auto otherStudentName = "otherStudentName";
+constexpr auto nonExistSurName = "nonExistSurName";
+constexpr auto onceExistSurName = "onceExistSurName";
+constexpr auto twiceExistSurName = "twiceExistSurName";
+constexpr auto otherStudentSurName = "otherStudentSurName";
 
-constexpr auto otherStudentName = "Edward";
+constexpr auto notImportantText = "notImportant";
+constexpr auto notImportantValue = 0;
+constexpr auto notImportantGender = Gender::Undefined;
 
-constexpr auto nonExistSurName = "Kazmierczak";
-constexpr auto onceExistSurName = "Nowak";
-constexpr auto twiceExistSurName = "Kowalski";
-constexpr auto otherStudentSurName = "Bono";
+constexpr std::array studentName = {"Student A", 
+                                    "Student A", 
+                                    "Student CCCCCCCCCCCCCCCCCCCCCCCCCCCCC"};
 
-constexpr std::array studentSurName = {
-    onceExistSurName, twiceExistSurName, twiceExistSurName};
+constexpr std::array studentSurName = {onceExistSurName, 
+                                    twiceExistSurName, 
+                                    twiceExistSurName};
+constexpr std::array studentIndex = {0, 
+                                    1, 
+                                    2};
 
-PersonType otherStudent = std::make_shared<Student>(otherStudentName, otherStudentSurName, "A", "A", "A", 0, nonExistPesel, Gender::Undefined);
+PersonType otherStudent = std::make_shared<Student>(otherStudentName, 
+                                            otherStudentSurName, 
+                                            notImportantText, 
+                                            notImportantText, 
+                                            notImportantText, 
+                                            notImportantValue, 
+                                            nonExistPesel, 
+                                            notImportantGender);
 
-const std::vector<PersonType> students = {
-    std::make_shared<Student>(studentName[0], studentSurName[0], "A", "A", "A", 0, anotherExistPesel, Gender::Undefined),
-    std::make_shared<Student>(studentName[1], studentSurName[1], "A", "A", "A", 1, onceExistPesel, Gender::Undefined),
-    std::make_shared<Student>(studentName[2], studentSurName[2], "A", "A", "A", 2, secondExistPesel, Gender::Undefined)};
-
-constexpr auto baseStudentsSize = 3;
+const auto studentsNumber = 3;
+const std::array<PersonType, studentsNumber> students = {
+    std::make_shared<Student>(studentName[0], 
+                            studentSurName[0], 
+                            notImportantText, 
+                            notImportantText, 
+                            notImportantText, 
+                            studentIndex[0], 
+                            ExistPesel_1, 
+                            notImportantGender),
+    std::make_shared<Student>(studentName[1], 
+                            studentSurName[1], 
+                            notImportantText,
+                            notImportantText, 
+                            notImportantText, 
+                            studentIndex[1], 
+                            ExistPesel_2, 
+                            notImportantGender),
+    std::make_shared<Student>(studentName[2], 
+                            studentSurName[2], 
+                            notImportantText, 
+                            notImportantText, 
+                            notImportantText, 
+                            studentIndex[2], 
+                            ExistPesel_3, 
+                            notImportantGender)};
 
 void fillDatabase(Database& db) {
     for (const auto& student : students) {
@@ -108,9 +143,9 @@ TEST_CASE("Sort database by surname in ascending order", "[Database][Sort][SurNa
     db.sortBySurName(std::less<>{});
     //then
     const auto& students = db.getPersons();
-    REQUIRE(students[0]->getSurName() == twiceExistSurName);
+    REQUIRE(students[0]->getSurName() == onceExistSurName);
     REQUIRE(students[1]->getSurName() == twiceExistSurName);
-    REQUIRE(students[2]->getSurName() == onceExistSurName);
+    REQUIRE(students[2]->getSurName() == twiceExistSurName);
 }
 
 TEST_CASE("Sort database by surname in descending order", "[Database][Sort][SurName]") {
@@ -121,9 +156,9 @@ TEST_CASE("Sort database by surname in descending order", "[Database][Sort][SurN
     db.sortBySurName(std::greater{});
     //then
     const auto& students = db.getPersons();
-    REQUIRE(students[0]->getSurName() == onceExistSurName);
+    REQUIRE(students[0]->getSurName() == twiceExistSurName);
     REQUIRE(students[1]->getSurName() == twiceExistSurName);
-    REQUIRE(students[2]->getSurName() == twiceExistSurName);
+    REQUIRE(students[2]->getSurName() == onceExistSurName);
 }
 
 TEST_CASE("Sort database by PESEL in ascending order", "[Database][Sort][PESEL]") {
@@ -219,7 +254,7 @@ TEST_CASE("Search by PESEL what exist once", "[Database][Search][PESEL]") {
     Database db{};
     fillDatabase(db);
     //when
-    auto result = db.searchByPesel(onceExistPesel);
+    auto result = db.searchByPesel(ExistPesel_1);
     //then
     REQUIRE(!result.empty());
     REQUIRE(result.size() == 1);
@@ -232,7 +267,7 @@ TEST_CASE("Search by PESEL student added exist twice", "[Database][Search][PESEL
     fillDatabase(db);
     fillDatabase(db);
     //when
-    auto result = db.searchByPesel(secondExistPesel);
+    auto result = db.searchByPesel(ExistPesel_3);
     //then
     REQUIRE(!result.empty());
     REQUIRE(result.size() == 1);
@@ -263,7 +298,7 @@ TEST_CASE("Delete by PESEL exist once in database", "[Database][Delete][PESEL]")
     Database db{};
     fillDatabase(db);
     //when
-    db.deleteByPesel(onceExistPesel);
+    db.deleteByPesel(ExistPesel_1);
     //then
     REQUIRE(db.getNumberOfPersons() == students.size() - 1);
 }
